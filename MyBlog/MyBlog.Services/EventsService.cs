@@ -15,12 +15,12 @@ namespace MyBlog.Services
             _eventsRepository = new EventsRepository();
         }
 
-        public List<Event> GetAllRecipes()
+        public List<Event> GetAllEvents()
         {
             return _eventsRepository.GetAll();
         }
 
-        public Event GetRecipeById(int id)
+        public Event GetEventById(int id)
         {
             return _eventsRepository.GetById(id);
         }

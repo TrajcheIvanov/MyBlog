@@ -1,0 +1,13 @@
+﻿@model MyBlog.Models.Event
+
+<div class="container" style="border: 3px solid grey; margin:10px; padding:10px">
+    <br />
+    <br />
+    <h3 class="card-header">@Model.Name</h3>
+    <img src="@Model.ImgUrl" alt="...">
+    <p class="card-text"> <b>Date:</b> @Model.Date</p>
+    <p class="card-text"><b>Location:</b> @Model.Location</p>
+    <p class="card-text"><b>Organized By:</b> @Model.OrganizedBy</p>
+    <p class="card-text"><b>Description:</b> @Model.Description</p>
+    <a href="/Recipes/Details/@Model.Id" class="btn btn-dark">More Info...</a>
+</div>

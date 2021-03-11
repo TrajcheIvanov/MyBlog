@@ -1,0 +1,33 @@
+﻿@model List<MyBlog.Models.Region>
+
+@{
+    ViewBag.Title = "Regions";
+}
+
+<br />
+<br />
+<div class="row">
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Location</th>
+                <th scope="col">Points Of Interest</th>
+                <th scope="col">Points Of Interest</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var region in Model)
+            {
+                <tr>
+                    <th scope="row">@region.Id</th>
+                    <td>@region.Name</td>
+                    <td>@region.Location</td>
+                    <td>@region.PointsOfInterest</td>
+                    <td><a href="@region.ExternalLink" class="btn btn-warning" target="_blank">More Info...</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

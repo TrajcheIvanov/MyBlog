@@ -17,8 +17,15 @@ namespace MyBlog.Controllers
         }
         public IActionResult Overview()
         {
-            var events = _service.GetAllRecipes();
+            var events = _service.GetAllEvents();
             return View(events);
+        }
+
+        public IActionResult MoreInfo(int id)
+        {
+            var even = _service.GetEventById(id);
+
+            return View(even);
         }
     }
 }
