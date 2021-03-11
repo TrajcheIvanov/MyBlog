@@ -1,0 +1,28 @@
+﻿@model List<MyBlog.Models.Event> 
+@{ 
+    ViewBag.Title = "Overview";
+}
+
+<div class="row">
+    @foreach (var even in Model)
+    {
+        <br />
+        <br />
+        <div class="card">
+            <h3 class="card-header">@even.Name</h3>
+            <div class="card-body">
+                <img src="@even.ImgUrl" alt="...">
+                <p class="card-text"> <b>Date:</b> @even.Date</p>
+                <p class="card-text"><b>Location:</b> @even.Location</p>
+                <p class="card-text"><b>Organized By:</b> @even.OrganizedBy</p>
+                <p class="card-text"><b>Description:</b> @even.Description</p>
+                <a href="/Recipes/Details/@even.Id" class="btn btn-dark">More Info...</a>
+            </div>
+            <br />
+            <br />
+        </div>
+        
+
+    }
+
+</div>
