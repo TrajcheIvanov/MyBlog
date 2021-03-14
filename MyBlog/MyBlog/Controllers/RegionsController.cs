@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MyBlog.Models;
 using MyBlog.Services;
+using MyBlog.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,17 +11,35 @@ namespace MyBlog.Controllers
 {
     public class RegionsController : Controller
     {
-        private RegionsService _service { get; set; }
+        private IRegionsService _service { get; set; }
 
-        public RegionsController()
+        public RegionsController(IRegionsService service)
         {
-            _service = new RegionsService();
+            _service = service;
         }
 
         public IActionResult Overview()
         {
             var regions = _service.GetAllRegions();
             return View(regions);
+        }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(Region region)
+        {
+            if (ModelState.IsValid)
+            {
+                _service.CreateRegion(region);
+                return RedirectToAction("Overview");
+            }
+
+            return View(region);
         }
     }
 }

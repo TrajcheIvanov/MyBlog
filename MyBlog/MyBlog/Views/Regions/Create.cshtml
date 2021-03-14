@@ -1,0 +1,31 @@
+﻿@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+
+@model MyBlog.Models.Region
+
+@{ ViewBag.Title = "Add Region"; }
+
+<form asp-controller="Regions" asp-action="Create" method="post">
+    <div class="form-group">
+        <label class="control-label" asp-for="Name">Name</label>
+        <input type="text" asp-for="Name" class="form-control" required />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label class="control-label" asp-for="Location">Location</label>
+        <input type="text" asp-for="Location" class="form-control" required />
+        <span asp-validation-for="Location" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label class="control-label" asp-for="PointsOfInterest">Points Of Interest</label>
+        <input type="text" asp-for="PointsOfInterest" class="form-control" required />
+        <span asp-validation-for="PointsOfInterest" class="text-danger"></span>
+    </div><div class="form-group">
+              <label class="control-label" asp-for="ExternalLink">External Link</label>
+    <input type="text" asp-for="ExternalLink" class="form-control" required />
+    <span asp-validation-for="ExternalLink" class="text-danger"></span>
+</div>
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-warning" />
+    </div>
+</form>
+

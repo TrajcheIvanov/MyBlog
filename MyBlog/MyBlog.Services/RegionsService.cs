@@ -1,18 +1,17 @@
 ﻿using MyBlog.Models;
-using MyBlog.Repositories;
-using System;
+using MyBlog.Repositories.Interfaces;
+using MyBlog.Services.Interfaces;
 using System.Collections.Generic;
-using System.Text;
 
 namespace MyBlog.Services
 {
-    public class RegionsService
+    public class RegionsService : IRegionsService
     {
-        private RegionsRepository _regionRepository { get; set; }
+        private IRegionsRepository _regionRepository { get; set; }
 
-        public RegionsService()
+        public RegionsService(IRegionsRepository regionRepository)
         {
-            _regionRepository = new RegionsRepository();
+            _regionRepository = regionRepository;
         }
 
         public List<Region> GetAllRegions()
@@ -23,6 +22,11 @@ namespace MyBlog.Services
         public Region GetRegionById(int id)
         {
             return _regionRepository.GetById(id);
+        }
+
+        public void CreateRegion(Region region)
+        {
+            _regionRepository.Add(region);
         }
     }
 }

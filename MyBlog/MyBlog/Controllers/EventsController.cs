@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MyBlog.Models;
 using MyBlog.Services;
+using MyBlog.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +11,11 @@ namespace MyBlog.Controllers
 {
     public class EventsController : Controller
     {
-        private EventsService _service { get; set; }
+        private IEventsService _service { get; set; }
 
-        public EventsController()
+        public EventsController(IEventsService service)
         {
-            _service = new EventsService();
+            _service = service;
         }
         public IActionResult Overview()
         {
@@ -24,6 +26,24 @@ namespace MyBlog.Controllers
         public IActionResult MoreInfo(int id)
         {
             var even = _service.GetEventById(id);
+
+            return View(even);
+        }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(Event even)
+        {
+            if(ModelState.IsValid)
+            {
+                _service.CreateEvent(even);
+                return RedirectToAction("Overview");
+            }
 
             return View(even);
         }

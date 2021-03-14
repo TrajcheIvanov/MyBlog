@@ -4,6 +4,10 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MyBlog.Repositories;
+using MyBlog.Repositories.Interfaces;
+using MyBlog.Services;
+using MyBlog.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +28,10 @@ namespace MyBlog
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddTransient<IEventsService, EventsService>();
+            services.AddTransient<IEventsRepository, EventsRepository>();
+            services.AddTransient<IRegionsService, RegionsService>();
+            services.AddTransient<IRegionsRepository, RegionsRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

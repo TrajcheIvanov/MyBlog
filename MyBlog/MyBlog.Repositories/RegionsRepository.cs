@@ -1,47 +1,32 @@
 ﻿using MyBlog.Models;
-using System;
+using MyBlog.Repositories.Interfaces;
+using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
+
 
 namespace MyBlog.Repositories
 {
-    public class RegionsRepository
+    public class RegionsRepository : IRegionsRepository
     {
-        public List<Region> Regions { get; set; }
 
+        const string Path = "Regions.txt";
         public RegionsRepository()
         {
-            var region1 = new Region()
+            if (!File.Exists(Path))
             {
-                Id = 1,
-                Name = "Vodno",
-                Location = "Skopje",
-                PointsOfInterest = "Cableway, Lots Of Trails, Bars",
-                ExternalLink = "https://en.wikipedia.org/wiki/Vodno"
-            };
+                File.WriteAllText(Path, "[]");
+            }
 
-            var region2 = new Region()
-            {
-                Id = 2,
-                Name = "Mavrovo",
-                Location = "Mavrovo",
-                PointsOfInterest = "Cableway, Lots Of Trails, Lake",
-                ExternalLink= "https://en.wikipedia.org/wiki/Mavrovo_(region)"
-            };
+            var result = File.ReadAllText(Path);
+            var deserialzedList = JsonConvert.DeserializeObject<List<Region>>(result);
+            Regions = deserialzedList;
 
-            var region3 = new Region()
-            {
-                Id = 3,
-                Name = "Popova Shapka",
-                Location = "Tetovo",
-                PointsOfInterest = "Cableway, Lots Of Trails, Water by the way",
-                ExternalLink= "https://en.wikipedia.org/wiki/%C5%A0ar_Mountains"
-            };
-
-
-            Regions = new List<Region> { region1, region2, region3 };
+           
         }
+
+        public List<Region> Regions { get; set; }
 
         public List<Region> GetAll()
         {
@@ -51,6 +36,30 @@ namespace MyBlog.Repositories
         public Region GetById(int id)
         {
             return Regions.FirstOrDefault(x => x.Id == id);
+        }
+
+        public void Add(Region region)
+        {
+            region.Id = GenerateId();
+            Regions.Add(region);
+            SaveChanges();
+        }
+
+        private int GenerateId()
+        {
+            var maxId = 0;
+
+            if (Regions.Any())
+            {
+                maxId = Regions.Max(x => x.Id);
+            }
+
+            return maxId + 1;
+        }
+        private void SaveChanges()
+        {
+            var serialzed = JsonConvert.SerializeObject(Regions);
+            File.WriteAllText(Path, serialzed);
         }
     }
 }

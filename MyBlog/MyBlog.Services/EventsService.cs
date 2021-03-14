@@ -1,18 +1,17 @@
 ﻿using MyBlog.Models;
-using MyBlog.Repositories;
-using System;
+using MyBlog.Repositories.Interfaces;
+using MyBlog.Services.Interfaces;
 using System.Collections.Generic;
-using System.Text;
 
 namespace MyBlog.Services
 {
-    public class EventsService
+    public class EventsService : IEventsService
     {
-        private EventsRepository _eventsRepository { get; set; }
+        private IEventsRepository _eventsRepository { get; set; }
 
-        public EventsService()
+        public EventsService(IEventsRepository eventsRepository)
         {
-            _eventsRepository = new EventsRepository();
+            _eventsRepository = eventsRepository;
         }
 
         public List<Event> GetAllEvents()
@@ -23,6 +22,11 @@ namespace MyBlog.Services
         public Event GetEventById(int id)
         {
             return _eventsRepository.GetById(id);
+        }
+
+        public void CreateEvent(Event even)
+        {
+            _eventsRepository.Add(even);
         }
     }
 }
