@@ -1,65 +1,36 @@
 ﻿using MyBlog.Models;
 using MyBlog.Repositories.Interfaces;
-using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-
+using System.Text;
 
 namespace MyBlog.Repositories
 {
     public class RegionsRepository : IRegionsRepository
     {
+        private MyBlogDbContext _context { get; set; }
 
-        const string Path = "Regions.txt";
-        public RegionsRepository()
+        public RegionsRepository(MyBlogDbContext context)
         {
-            if (!File.Exists(Path))
-            {
-                File.WriteAllText(Path, "[]");
-            }
-
-            var result = File.ReadAllText(Path);
-            var deserialzedList = JsonConvert.DeserializeObject<List<Region>>(result);
-            Regions = deserialzedList;
-
-           
+            _context = context;
         }
-
-        public List<Region> Regions { get; set; }
+        public void Add(Region region)
+        {
+            _context.Regions.Add(region);
+            _context.SaveChanges();
+        }
 
         public List<Region> GetAll()
         {
-            return Regions;
+            var result = _context.Regions.ToList();
+            return result;
         }
 
         public Region GetById(int id)
         {
-            return Regions.FirstOrDefault(x => x.Id == id);
-        }
-
-        public void Add(Region region)
-        {
-            region.Id = GenerateId();
-            Regions.Add(region);
-            SaveChanges();
-        }
-
-        private int GenerateId()
-        {
-            var maxId = 0;
-
-            if (Regions.Any())
-            {
-                maxId = Regions.Max(x => x.Id);
-            }
-
-            return maxId + 1;
-        }
-        private void SaveChanges()
-        {
-            var serialzed = JsonConvert.SerializeObject(Regions);
-            File.WriteAllText(Path, serialzed);
+            var result = _context.Regions.FirstOrDefault(x => x.Id == id);
+            return result;
         }
     }
 }

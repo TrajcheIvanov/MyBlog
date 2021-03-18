@@ -12,7 +12,7 @@ namespace MyBlog.Repositories.Interfaces
 
         Region GetById(int id);
 
-        void Add(Region recipe);
+        void Add(Region region);
 
     }
 }

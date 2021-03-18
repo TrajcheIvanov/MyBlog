@@ -17,9 +17,9 @@ namespace MyBlog.Controllers
         {
             _service = service;
         }
-        public IActionResult Overview()
+        public IActionResult Overview(string name)
         {
-            var events = _service.GetAllEvents();
+            var events = _service.GetEventByName(name);
             return View(events);
         }
 

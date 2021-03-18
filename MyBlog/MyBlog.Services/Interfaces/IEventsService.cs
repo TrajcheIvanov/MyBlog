@@ -9,6 +9,7 @@ namespace MyBlog.Services.Interfaces
     {
         List<Event> GetAllEvents();
 
+        List<Event> GetEventByName(string name);
         Event GetEventById(int id);
 
         void CreateEvent(Event even);

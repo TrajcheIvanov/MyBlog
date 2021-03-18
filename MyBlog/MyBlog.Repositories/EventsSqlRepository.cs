@@ -95,5 +95,10 @@ namespace MyBlog.Repositories
 
             return result;
         }
+
+        public List<Event> GetByName(string name)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

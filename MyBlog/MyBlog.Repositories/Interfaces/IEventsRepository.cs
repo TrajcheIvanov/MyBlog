@@ -9,6 +9,7 @@ namespace MyBlog.Repositories.Interfaces
     {
         List<Event> GetAll();
 
+        List<Event> GetByName(string name);
         Event GetById(int id);
 
         void Add(Event even);

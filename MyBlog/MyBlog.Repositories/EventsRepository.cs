@@ -1,63 +1,54 @@
 ﻿using MyBlog.Models;
 using MyBlog.Repositories.Interfaces;
-using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-
+using System.Text;
 
 namespace MyBlog.Repositories
 {
     public class EventsRepository : IEventsRepository
-    {
-        const string Path = "Events.txt";
+    {   
+        private MyBlogDbContext _context { get; set; }
 
-        public EventsRepository()
+        public EventsRepository(MyBlogDbContext context)
         {
-            if (!File.Exists(Path))
-            {
-                File.WriteAllText(Path, "[]");
-            }
-
-            var result = File.ReadAllText(Path);
-            var deserialzedList = JsonConvert.DeserializeObject<List<Event>>(result);
-            Events = deserialzedList;
+            _context = context;
+        }
+        public void Add(Event even)
+        {
+            _context.Events.Add(even);
+            _context.SaveChanges();
         }
 
-        public List<Event> Events { get; set; }
+        public void Delete(Event even)
+        {
+            _context.Events.Remove(even);
+            _context.SaveChanges();
+        }
+
+        public void Update(Event even)
+        {
+            _context.Events.Update(even);
+            _context.SaveChanges();
+        }
 
         public List<Event> GetAll()
         {
-            return Events;
+            var events = _context.Events.ToList();
+            return events;
         }
 
         public Event GetById(int id)
         {
-            return Events.FirstOrDefault(x => x.Id == id);
+            var even = _context.Events.FirstOrDefault(x => x.Id == id);
+            return even;
         }
 
-        public void Add(Event even)
+        public List<Event> GetByName(string name)
         {
-            even.Id = GenerateId();
-            Events.Add(even);
-            SaveChanges();
-        }
-
-        private int GenerateId()
-        {
-            var maxId = 0;
-
-            if (Events.Any())
-            {
-                maxId = Events.Max(x => x.Id);
-            }
-
-            return maxId + 1;
-        }
-        private void SaveChanges()
-        {
-            var serialzed = JsonConvert.SerializeObject(Events);
-            File.WriteAllText(Path, serialzed);
+            var events = _context.Events.Where(x => x.Name.Contains(name)).ToList();
+            return events;
         }
     }
 }

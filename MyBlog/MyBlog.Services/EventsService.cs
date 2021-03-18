@@ -28,5 +28,18 @@ namespace MyBlog.Services
         {
             _eventsRepository.Add(even);
         }
+
+        public List<Event> GetEventByName(string name)
+        {
+
+            if (name == null)
+            {
+                return _eventsRepository.GetAll();
+            } else
+            {
+                return _eventsRepository.GetByName(name);
+            }
+           
+        }
     }
 }
