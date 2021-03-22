@@ -1,4 +1,5 @@
-﻿using MyBlog.Models;
+﻿using MyBlog.Common.Exceptions;
+using MyBlog.Models;
 using MyBlog.Repositories.Interfaces;
 using MyBlog.Services.Interfaces;
 using System.Collections.Generic;
@@ -40,6 +41,25 @@ namespace MyBlog.Services
                 return _eventsRepository.GetByName(name);
             }
            
+        }
+
+        public void Delete(int Id)
+        {
+            var even = _eventsRepository.GetById(Id);
+
+            if (even == null)
+            {
+                throw new NotFoundException($"The Event with id {Id} was not found");
+            }
+            else
+            {
+                _eventsRepository.Delete(even);
+            }
+        }
+
+        public void Update(Event even)
+        {
+            _eventsRepository.Update(even);
         }
     }
 }

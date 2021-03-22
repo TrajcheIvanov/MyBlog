@@ -1,0 +1,68 @@
+﻿@model List<MyBlog.Models.Event>
+
+@{
+    ViewBag.Title = "Manage events";
+
+}
+
+<br />
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @ViewBag.ErrorMessage
+    </div>
+}
+
+@if (ViewBag.SuccessMessage != null)
+{
+    <div class="alert alert-success" role="alert">
+        @ViewBag.SuccessMessage
+    </div>
+}
+
+@if (ViewBag.UpdateMessage != null)
+{
+    <div class="alert alert-warning" role="alert">
+        @ViewBag.UpdateMessage
+    </div>
+}
+
+<br />
+<p>
+    <a class="btn btn-success" href="/Events/Create">Add Event</a>
+</p>
+<br />
+
+@if (Model.Count == 0)
+{
+    <h2>There arent any events </h2>
+}
+else
+{
+    <table class="table table-dark table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Name</th>
+                <th scope="col">Date</th>
+                <th scope="col">Location</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var even in Model)
+            {
+            <tr>
+                <td>@even.Id</td>
+                <td>@even.Name</td>
+                <td>@even.Date</td>
+                <td>@even.Location</td>
+                <td class="text-center">
+                    <a href="/Events/Edit/@even.Id" class="text-warning">Edit Event</a> |
+                    <a href="/Events/Delete/@even.Id" class="text-danger">Delete</a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}  

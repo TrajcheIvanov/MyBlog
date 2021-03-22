@@ -14,5 +14,6 @@ namespace MyBlog.Services.Interfaces
 
         void CreateRegion(Region region);
 
+
     }
 }

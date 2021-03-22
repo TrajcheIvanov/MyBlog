@@ -13,5 +13,9 @@ namespace MyBlog.Services.Interfaces
         Event GetEventById(int id);
 
         void CreateEvent(Event even);
+
+        void Delete(int Id);
+
+        void Update(Event even);
     }
 }
