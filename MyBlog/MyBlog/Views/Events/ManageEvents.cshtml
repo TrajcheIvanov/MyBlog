@@ -1,4 +1,4 @@
-﻿@model List<MyBlog.Models.Event>
+﻿@model List<MyBlog.ViewModels.EventManageEventsModel>
 
 @{
     ViewBag.Title = "Manage events";
@@ -58,8 +58,8 @@ else
                 <td>@even.Date</td>
                 <td>@even.Location</td>
                 <td class="text-center">
-                    <a href="/Events/Edit/@even.Id" class="text-warning">Edit Event</a> |
-                    <a href="/Events/Delete/@even.Id" class="text-danger">Delete</a>
+                    <a href="/Events/Update/@even.Id" class="text-warning">Edit Event</a> |
+                    <a href="/Events/Delete/@even.Id" class="text-danger" onclick="return confirm('Are you sure?')">Delete</a>
                 </td>
             </tr>
             }

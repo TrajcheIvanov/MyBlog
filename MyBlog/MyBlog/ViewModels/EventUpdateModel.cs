@@ -1,14 +1,12 @@
-﻿
-using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace MyBlog.Models
+namespace MyBlog.ViewModels
 {
-    public class Event
+    public class EventUpdateModel
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage ="Please enter Name")]
+        [Required(ErrorMessage = "Please enter Name")]
         [StringLength(maximumLength: 30, MinimumLength = 3)]
         public string Name { get; set; }
         [Required(ErrorMessage = "The Location is mandatory")]
@@ -20,10 +18,7 @@ namespace MyBlog.Models
         [Required]
         public string OrganizedBy { get; set; }
         [Required]
-        public string ImgUrl {get;set;}
+        public string ImgUrl { get; set; }
 
-        public DateTime DateCreated { get; set; }
-
-        public DateTime DateModified { get; set; }
     }
 }

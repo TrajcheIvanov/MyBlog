@@ -2,6 +2,7 @@
 using MyBlog.Models;
 using MyBlog.Repositories.Interfaces;
 using MyBlog.Services.Interfaces;
+using System;
 using System.Collections.Generic;
 
 namespace MyBlog.Services
@@ -27,6 +28,7 @@ namespace MyBlog.Services
 
         public void CreateEvent(Event even)
         {
+            even.DateCreated = DateTime.Now;
             _eventsRepository.Add(even);
         }
 
@@ -59,7 +61,26 @@ namespace MyBlog.Services
 
         public void Update(Event even)
         {
-            _eventsRepository.Update(even);
+            var EventForUpdate = _eventsRepository.GetById(even.Id);
+
+            if (EventForUpdate != null)
+            {
+               
+                EventForUpdate.Date = even.Date;
+                EventForUpdate.Description = even.Description;
+                EventForUpdate.ImgUrl = even.ImgUrl;
+                EventForUpdate.Location = even.Location;
+                EventForUpdate.Name = even.Name;
+                EventForUpdate.OrganizedBy = even.OrganizedBy;
+                EventForUpdate.DateModified = DateTime.Now;
+
+                _eventsRepository.Update(EventForUpdate);
+            }
+            else
+            {
+                throw new NotFoundException($"The Event with id {even.Id} was not found");
+            }
+            
         }
     }
 }

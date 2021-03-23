@@ -1,3 +1,20 @@
 ﻿body {
     background-color: lightgray;
 }
+
+.card {
+    height: auto;
+    /*width: 30rem;*/
+    padding: 2rem;
+    margin: 1rem;
+    text-align: center;
+    /*flex-wrap: wrap;*/
+    border: solid 3px grey;
+    border-radius: 1rem;
+}
+
+img {
+    height: 50%;
+    width: 100%;
+    object-fit: cover;
+}

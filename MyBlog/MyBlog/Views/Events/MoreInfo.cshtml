@@ -1,4 +1,4 @@
-﻿@model MyBlog.Models.Event
+﻿@model MyBlog.ViewModels.EventMoreInfoModel
 
 @{
     ViewBag.Title = "More Info";
@@ -13,5 +13,5 @@
     <p class="card-text"><b>Location:</b> @Model.Location</p>
     <p class="card-text"><b>Organized By:</b> @Model.OrganizedBy</p>
     <p class="card-text"><b>Description:</b> @Model.Description</p>
-    <a href="/Recipes/Details/@Model.Id" class="btn btn-dark">More Info...</a>
+    <p class="card-text"><b>Date Created:</b> @Model.DateCreated</p>
 </div>

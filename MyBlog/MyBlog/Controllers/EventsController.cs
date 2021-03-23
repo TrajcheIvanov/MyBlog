@@ -1,12 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyBlog.Common.Exceptions;
-using MyBlog.Models;
-using MyBlog.Services;
+using MyBlog.Mappings;
 using MyBlog.Services.Interfaces;
+using MyBlog.ViewModels;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace MyBlog.Controllers
 {
@@ -21,7 +19,10 @@ namespace MyBlog.Controllers
         public IActionResult Overview(string name)
         {
             var events = _service.GetEventByName(name);
-            return View(events);
+
+            var eventOverviewModels = events.Select(x => x.ToOverviewModel()).ToList();
+
+            return View(eventOverviewModels);
         }
 
         public IActionResult ManageEvents(string errorMessage, string successMessage, string updateMessage)
@@ -30,7 +31,9 @@ namespace MyBlog.Controllers
             ViewBag.ErrorMessage = errorMessage;
             ViewBag.UpdateMessage = updateMessage;
             var events = _service.GetAllEvents();
-            return View(events);
+
+            var viewModels = events.Select(x => x.ToManageEventsModel()).ToList();
+            return View(viewModels);
         }
 
         public IActionResult MoreInfo(int id)
@@ -43,7 +46,7 @@ namespace MyBlog.Controllers
                     return RedirectToAction("ErrorNotFound", "Info");
                 }
 
-                return View(even);
+                return View(even.ToMoreInfoModel());
             }
             catch (Exception)
             {
@@ -62,11 +65,11 @@ namespace MyBlog.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Event even)
+        public IActionResult Create(EventCreateModel even)
         {
             if(ModelState.IsValid)
             {
-                _service.CreateEvent(even);
+                _service.CreateEvent(even.ToModel());
                 return RedirectToAction("ManageEvents", new { SuccessMessage = "Event created sucessfully" });
             }
 
@@ -91,7 +94,8 @@ namespace MyBlog.Controllers
             }
         }
 
-        public IActionResult Edit(int Id)
+        [HttpGet]
+        public IActionResult Update(int Id)
         {
             try
             {
@@ -99,7 +103,7 @@ namespace MyBlog.Controllers
 
                 if (even != null)
                 {
-                    return RedirectToAction("EditEvent", "Events", even);
+                    return View(even);
                 }
                 else
                 {
@@ -118,18 +122,29 @@ namespace MyBlog.Controllers
             }
         }
 
-        public IActionResult EditEvent(Event even)
-        {
-            return View(even);
-        }
+      
 
         [HttpPost]
-        public IActionResult Update(Event even)
+        public IActionResult Update(EventUpdateModel even)
         {
             if (ModelState.IsValid)
             {
-                _service.Update(even);
-                return RedirectToAction("ManageEvents", new { UpdateMEssage = "Event updated sucessfully" });
+                try
+                {
+                    _service.Update(even.ToModel());
+                    return RedirectToAction("ManageEvents", new { UpdateMEssage = "Event updated sucessfully" });
+                }
+                catch (NotFoundException ex)
+                {
+
+                    return RedirectToAction("ManageEvents", new { ErrorMessage = ex.Message });
+                }
+                catch (Exception)
+                {
+
+                    return RedirectToAction("InternalError", "Info");
+                }
+
             }
             else
             {
