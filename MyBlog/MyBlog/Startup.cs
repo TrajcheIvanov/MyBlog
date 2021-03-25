@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -32,17 +31,11 @@ namespace MyBlog
             services.AddDbContext<MyBlogDbContext>(
                 x => x.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=MyBlog;Trusted_Connection=True;")
                 );
-
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
-
-            services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            services.AddControllersWithViews();
             services.AddTransient<IEventsService, EventsService>();
-            services.AddTransient<IRegionsService, RegionsService>();
-            services.AddTransient<IAuthService, AuthService>();
-
             services.AddTransient<IEventsRepository, EventsRepository>();
+            services.AddTransient<IRegionsService, RegionsService>();
             services.AddTransient<IRegionsRepository, RegionsRepository>();
-            services.AddTransient<IUsersRepository, UsersRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,7 +56,6 @@ namespace MyBlog
 
             app.UseRouting();
 
-            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
