@@ -50,7 +50,7 @@ namespace MyBlog.Controllers
 
         public IActionResult SignOut()
         {
-            return View();
+            return RedirectToAction("Overview", "Events");
         }
     }
 }
