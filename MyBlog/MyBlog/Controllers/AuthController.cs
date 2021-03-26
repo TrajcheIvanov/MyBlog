@@ -47,5 +47,10 @@ namespace MyBlog.Controllers
                 return View(signInModel);
             }
         }
+
+        public IActionResult SignOut()
+        {
+            return View();
+        }
     }
 }
