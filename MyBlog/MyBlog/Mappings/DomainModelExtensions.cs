@@ -59,6 +59,13 @@ namespace MyBlog.Mappings
             };
         }
 
-
+        public static UsersDetailsModel ToDetailsModel(this User user)
+        {
+            return new UsersDetailsModel()
+            {
+                Username = user.Username,
+                Email = user.Email,
+            };
+        }
     }
 }

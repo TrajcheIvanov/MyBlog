@@ -21,16 +21,23 @@ namespace MyBlog.Controllers
         }
 
         [HttpPost]
-        public IActionResult SignIn(SignInModel signInModel)
+        public IActionResult SignIn(SignInModel signInModel, string returnUrl)
         {
             if (ModelState.IsValid)
             {
 
-                var response = _authService.SignIn(signInModel.Username, signInModel.Password, HttpContext);
+                var response = _authService.SignIn(signInModel.Username, signInModel.Password, signInModel.IsPersistent ,HttpContext);
 
                 if (response.IsSuccessful)
                 {
-                    return RedirectToAction("Overview", "Events");
+                    if (returnUrl == null)
+                    {
+                        return RedirectToAction("Overview", "Events");
+                    }
+                    else
+                    {
+                        return Redirect(returnUrl);
+                    }
                 }
                 else
                 {
@@ -47,6 +54,7 @@ namespace MyBlog.Controllers
 
         public IActionResult SignOut()
         {
+            _authService.SignOut(HttpContext);
             return RedirectToAction("Overview", "Events");
         }
     }

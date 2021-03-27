@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MyBlog.Common.Exceptions;
 using MyBlog.Mappings;
 using MyBlog.Services.Interfaces;
@@ -7,7 +8,8 @@ using System;
 using System.Linq;
 
 namespace MyBlog.Controllers
-{
+{   
+    [Authorize]
     public class EventsController : Controller
     {
         private IEventsService _service { get; set; }
@@ -16,6 +18,8 @@ namespace MyBlog.Controllers
         {
             _service = service;
         }
+
+
         public IActionResult Overview(string name)
         {
             var events = _service.GetEventByName(name);

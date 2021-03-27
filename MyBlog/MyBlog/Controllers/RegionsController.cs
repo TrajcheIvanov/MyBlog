@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MyBlog.Models;
 using MyBlog.Services;
 using MyBlog.Services.Interfaces;
@@ -8,7 +9,8 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace MyBlog.Controllers
-{
+{   
+    [Authorize]
     public class RegionsController : Controller
     {
         private IRegionsService _service { get; set; }

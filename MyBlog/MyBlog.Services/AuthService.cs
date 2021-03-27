@@ -21,7 +21,7 @@ namespace MyBlog.Services
             _usersRepository = usersRepository;
         }
 
-        public StatusModel SignIn(string username, string password, HttpContext httpContext)
+        public StatusModel SignIn(string username, string password, bool isPersistent, HttpContext httpContext)
         {
             var responese = new StatusModel();
             var user = _usersRepository.GetByUsername(username);
@@ -39,6 +39,8 @@ namespace MyBlog.Services
 
                 var principal = new ClaimsPrincipal(identity);
 
+                var authProps = new AuthenticationProperties() { IsPersistent = isPersistent };
+
                 Task.Run(() => httpContext.SignInAsync(principal)).GetAwaiter().GetResult();
 
                 responese.IsSuccessful = true;
@@ -50,6 +52,11 @@ namespace MyBlog.Services
             }
 
             return responese;
+        }
+
+        public void SignOut(HttpContext httpContext)
+        {
+            Task.Run(() => httpContext.SignOutAsync()).GetAwaiter().GetResult();
         }
     }
 }

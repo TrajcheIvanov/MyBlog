@@ -34,12 +34,19 @@ namespace MyBlog
                 );
 
 
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
+                options =>
+                {
+                    options.ExpireTimeSpan = TimeSpan.FromDays(30);
+                    options.LoginPath = "/Auth/SignIn";
+                }
+                );
 
             services.AddControllersWithViews();
             services.AddTransient<IEventsService, EventsService>();
             services.AddTransient<IRegionsService, RegionsService>();
             services.AddTransient<IAuthService, AuthService>();
+            services.AddTransient<IUserServices, UserServices>();
 
             services.AddTransient<IEventsRepository, EventsRepository>();
             services.AddTransient<IRegionsRepository, RegionsRepository>();
