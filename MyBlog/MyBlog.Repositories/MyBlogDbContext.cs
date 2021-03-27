@@ -16,5 +16,7 @@ namespace MyBlog.Repositories
 
         public DbSet<Region> Regions { get; set; }
 
+        public DbSet<User> Users { get; set; }
+
     }
 }
