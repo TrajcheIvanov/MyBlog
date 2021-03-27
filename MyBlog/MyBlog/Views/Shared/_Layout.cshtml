@@ -23,9 +23,31 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/Info/ContactUs">Contact Us</a>
                     </li>
+<<<<<<< HEAD
                     <li class="nav-item">
                         <a class="nav-link" href="/Events/ManageEvents">Manage events</a>
                     </li>
+=======
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Events/ManageEvents">Manage events</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Users/Details">@User.FindFirst("Username").Value</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Auth/SignOut">Sign Out</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Auth/SignIn">Sign In</a>
+                        </li>
+                    }
+
+>>>>>>> temp
                 </ul>
             </div>
         </nav>
