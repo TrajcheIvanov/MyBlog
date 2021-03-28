@@ -67,5 +67,15 @@ namespace MyBlog.Mappings
                 Email = user.Email,
             };
         }
+
+        public static UserUpdateModel ToUpdateModel(this User user)
+        {
+            return new UserUpdateModel()
+            {
+                Username = user.Username,
+                Email = user.Email,
+
+            };
+        }
     }
 }

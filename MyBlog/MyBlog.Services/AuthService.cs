@@ -41,7 +41,7 @@ namespace MyBlog.Services
 
                 var authProps = new AuthenticationProperties() { IsPersistent = isPersistent };
 
-                Task.Run(() => httpContext.SignInAsync(principal)).GetAwaiter().GetResult();
+                Task.Run(() => httpContext.SignInAsync(principal, authProps)).GetAwaiter().GetResult();
 
                 responese.IsSuccessful = true;
             }

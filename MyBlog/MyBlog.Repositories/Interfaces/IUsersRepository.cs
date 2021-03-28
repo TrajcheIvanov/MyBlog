@@ -10,5 +10,7 @@ namespace MyBlog.Repositories.Interfaces
         User GetByUsername(string username);
 
         User GetById(int userId);
+
+        void Update(User user);
     }
 }

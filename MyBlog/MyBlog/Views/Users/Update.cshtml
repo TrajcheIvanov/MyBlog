@@ -1,0 +1,18 @@
+﻿@model MyBlog.ViewModels.UserUpdateModel
+
+@{
+    ViewBag.Title = "Update User Details";
+}
+
+<br />
+<h3> Updating details for @Model.Username </h3>
+<form asp-controller="Users" asp-action="Update" method="post">
+    <div class="form-group">
+        <label class="control-label" asp-for="Email"> E-mail </label>
+        <input type="text" asp-for="Email" class="form-control" required />
+        <span asp-validation-for="Email" class="text-danger">  </span>
+    </div>
+    <div>
+        <input type="submit" value="Save changes" class="btn btn-success" />
+    </div>
+</form>
