@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace MyBlog.Controllers
 {   
-    [Authorize]
+    
     public class RegionsController : Controller
     {
         private IRegionsService _service { get; set; }
@@ -27,12 +27,14 @@ namespace MyBlog.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "IsAdministrator")]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize(Policy = "IsAdministrator")]
         public IActionResult Create(Region region)
         {
             if (ModelState.IsValid)

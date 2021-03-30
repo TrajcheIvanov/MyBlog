@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace MyBlog.Controllers
 {   
-    [Authorize]
+    [Authorize(Policy = "IsAdministrator")]
     public class EventsController : Controller
     {
         private IEventsService _service { get; set; }
@@ -19,7 +19,7 @@ namespace MyBlog.Controllers
             _service = service;
         }
 
-
+        [AllowAnonymous]
         public IActionResult Overview(string name)
         {
             var events = _service.GetEventByName(name);
@@ -40,6 +40,7 @@ namespace MyBlog.Controllers
             return View(viewModels);
         }
 
+        [AllowAnonymous]
         public IActionResult MoreInfo(int id)
         {
             try

@@ -39,8 +39,17 @@ namespace MyBlog
                 {
                     options.ExpireTimeSpan = TimeSpan.FromDays(30);
                     options.LoginPath = "/Auth/SignIn";
+                    options.AccessDeniedPath = "/Auth/AccessDenied";
                 }
                 );
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("IsAdministrator", policy =>
+                {
+                    policy.RequireClaim("IsAdministrator", "True");
+                });
+            });
 
             services.AddControllersWithViews();
             services.AddTransient<IEventsService, EventsService>();

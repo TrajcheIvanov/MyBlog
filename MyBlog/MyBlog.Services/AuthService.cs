@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
+using MyBlog.Models;
 using MyBlog.Repositories.Interfaces;
 using MyBlog.Services.DtoModels;
 using MyBlog.Services.Interfaces;
@@ -26,13 +27,14 @@ namespace MyBlog.Services
             var responese = new StatusModel();
             var user = _usersRepository.GetByUsername(username);
 
-            if (user != null && user.Password == password)
+            if (user != null && BCrypt.Net.BCrypt.Verify(password,user.Password))
             {
                 var claims = new List<Claim>()
                 {
                     new Claim("Id", user.Id.ToString()),
                     new Claim("Username", user.Username),
-                    new Claim("Email", user.Email)
+                    new Claim("Email", user.Email),
+                    new Claim("IsAdministrator", user.IsAdministrator.ToString())
                 };
 
                 var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -57,6 +59,28 @@ namespace MyBlog.Services
         public void SignOut(HttpContext httpContext)
         {
             Task.Run(() => httpContext.SignOutAsync()).GetAwaiter().GetResult();
+        }
+
+        public StatusModel SingUp(User user)
+        {
+            var response = new StatusModel();
+
+            var exist = _usersRepository.CheckIfExists(user.Username, user.Email);
+
+            if (exist)
+            {
+                response.IsSuccessful = false;
+                response.Message = "UIser with username or email already exists";
+            }
+            else
+            {
+                var password = user.Password;
+                user.Password = BCrypt.Net.BCrypt.HashPassword(password);
+                user.DateCreat = DateTime.Now;
+                _usersRepository.Add(user);
+            }
+
+            return response;
         }
     }
 }

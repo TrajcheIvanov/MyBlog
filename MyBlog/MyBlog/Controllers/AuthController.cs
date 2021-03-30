@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MyBlog.Mappings;
 using MyBlog.Services.Interfaces;
 using MyBlog.ViewModels;
 
@@ -56,6 +57,44 @@ namespace MyBlog.Controllers
         {
             _authService.SignOut(HttpContext);
             return RedirectToAction("Overview", "Events");
+        }
+
+        [HttpGet]
+        public IActionResult SignUp()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult SignUp(SignUpModel signUpModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = signUpModel.ToModel();
+
+                var response = _authService.SingUp(user);
+
+                if (response.IsSuccessful)
+                {
+                    return RedirectToAction("SignIn");
+                }
+                else
+                {
+                    ModelState.AddModelError("", response.Message);
+                    return View(signUpModel);
+                }
+
+            }
+            else
+            {
+                return View(signUpModel);
+            }
+
+        }
+
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
     }
 }

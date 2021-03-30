@@ -16,5 +16,9 @@ namespace MyBlog.Models
         public string Password { get; set; }
 
         public string Email { get; set; }
+
+        public DateTime DateCreat { get; set; }
+
+        public bool IsAdministrator { get; set; }
     }
 }

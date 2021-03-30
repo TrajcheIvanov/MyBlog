@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using MyBlog.Models;
 using MyBlog.Services.DtoModels;
 
 namespace MyBlog.Services.Interfaces
@@ -8,5 +9,6 @@ namespace MyBlog.Services.Interfaces
         StatusModel SignIn(string username, string password, bool isPersistent, HttpContext httpContext);
 
         void SignOut(HttpContext httpContext);
+        StatusModel SingUp(User user);
     }
 }

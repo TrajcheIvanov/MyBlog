@@ -40,5 +40,15 @@ namespace MyBlog.Mappings
                 Email = updateModel.Email,
             };
         }
+
+        public static User ToModel(this SignUpModel signUpModel)
+        {
+            return new User
+            {
+                Username = signUpModel.Username,
+                Email = signUpModel.Email,
+                Password = signUpModel.Password,
+            };
+        }
     }
 }
