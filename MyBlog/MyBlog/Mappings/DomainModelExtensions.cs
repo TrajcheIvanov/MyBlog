@@ -1,5 +1,6 @@
 ﻿using MyBlog.Models;
 using MyBlog.ViewModels;
+using System.Collections.Generic;
 
 namespace MyBlog.Mappings
 {
@@ -76,6 +77,23 @@ namespace MyBlog.Mappings
                 Email = user.Email,
 
             };
+        }
+
+        public static List<ManageUserModel> ToManageUserModels(this List<User> users)
+        {
+            var manageUsers = new List<ManageUserModel>();
+
+            foreach (var user in users)
+            {
+                var newManageUserModel = new ManageUserModel();
+                newManageUserModel.Id = user.Id;
+                newManageUserModel.Username = user.Username;
+                newManageUserModel.IsAdministrator = user.IsAdministrator;
+
+                manageUsers.Add(newManageUserModel);
+            }
+
+            return manageUsers;
         }
     }
 }

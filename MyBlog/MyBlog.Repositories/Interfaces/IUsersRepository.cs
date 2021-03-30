@@ -16,5 +16,9 @@ namespace MyBlog.Repositories.Interfaces
         bool CheckIfExists(string username, string email);
 
         void Add(User user);
+
+        List<User> GetAll();
+
+        void Remove(User user);
     }
 }

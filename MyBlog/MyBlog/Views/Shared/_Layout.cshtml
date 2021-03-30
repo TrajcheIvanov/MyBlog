@@ -27,27 +27,28 @@
                     {
                         if (Convert.ToBoolean(User.FindFirst("IsAdministrator").Value))
                         {
-                             <li class="nav-item">
-                             <a class="nav-link" href="/Events/ManageEvents">Manage events</a>
-                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Events/ManageEvents">Manage events</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Users/ManageUsers">Manage users</a>
+                            </li>
                         }
-                       
-                        <li class="nav-item">
-                            <a class="nav-link" href="/Users/Details">@User.FindFirst("Username").Value</a>
-                        </li> 
-                        <li class="nav-item">
-                            <a class="nav-link" href="/Auth/SignOut">Sign Out</a>
-                        </li>
-                        }
-                         else
-                        {
-                        <li class="nav-item">
-                            <a class="nav-link" href="/Auth/SignIn">Sign In</a>
-                        </li>
-                         <li class="nav-item">
-                            <a class="nav-link" href="/Auth/SignUp">Sign Up</a>
-                        </li>
-                        }
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/Users/Details">@User.FindFirst("Username").Value</a>
+                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/Auth/SignOut">Sign Out</a>
+                                </li> }
+                                            else
+                                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/Auth/SignIn">Sign In</a>
+                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="/Auth/SignUp">Sign Up</a>
+                                                </li>}
 
                 </ul>
             </div>

@@ -27,6 +27,12 @@ namespace MyBlog.Repositories
             return _context.Users.Any(x => x.Username == username || x.Email == email);
         }
 
+        public List<User> GetAll()
+        {
+            var result = _context.Users.ToList();
+            return result;
+        }
+
         public User GetById(int userId)
         {
             return _context.Users.FirstOrDefault(x => x.Id == userId);
@@ -35,6 +41,12 @@ namespace MyBlog.Repositories
         public User GetByUsername(string username)
         {
             return _context.Users.FirstOrDefault(x => x.Username == username);
+        }
+
+        public void Remove(User user)
+        {
+            _context.Users.Remove(user);
+            _context.SaveChanges();
         }
 
         public void Update(User user)
