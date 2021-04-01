@@ -5,18 +5,10 @@ using System.Text;
 
 namespace MyBlog.Repositories.Interfaces
 {
-    public interface IEventsRepository
+    public interface IEventsRepository : IBaseRepository<Event>
     {
-        List<Event> GetAll();
-
+        
         List<Event> GetByName(string name);
-
-        Event GetById(int id);
-
-        void Add(Event even);
-
-        void Delete(Event even);
-
-        void Update(Event even);
+ 
     }
 }

@@ -59,7 +59,7 @@ namespace MyBlog.Controllers
                 {
                     var userModel = user.ToModel();
                     userModel.Id = int.Parse(User.FindFirst("Id").Value);
-                    var response = _usersService.Update(userModel);
+                    var response = _usersService.ToggleAdminRole(userModel);
 
                     if (response.IsSuccessful)
                     {
@@ -83,40 +83,47 @@ namespace MyBlog.Controllers
             }
         }
 
-        
-        public IActionResult ManageUsers()
+        [Authorize(Policy = "IsAdministrator")]
+        public IActionResult ManageUsers(string successMessage, string errorMessage)
         {
-            var domainUsers = _usersService.GetAllUsers();
+            ViewBag.SuccessMessage = successMessage;
+            ViewBag.ErrorMessage = errorMessage;
 
-            return View(domainUsers.ToManageUserModels());
+            var domainUsers = _usersService.GetAllUsers();
+            var id = int.Parse(User.FindFirst("Id").Value);
+            var viewUsers = domainUsers.Where(x => x.Id != id).ToList();
+
+            return View(viewUsers.ToManageUserModels());
         }
 
+        [Authorize(Policy = "IsAdministrator")]
         public IActionResult ToggleAdmin(int Id)
         {
             var response = _usersService.ToggleAdmin(Id);
 
             if (response.IsSuccessful)
             {
-                return RedirectToAction("ManageUsers");
+                return RedirectToAction("ManageUsers", new { SuccessMessage = "User updated successfuly" });
             }
             else
             {
-                return RedirectToAction("ErrorNotFound", "Info");
+                return RedirectToAction("ManageUsers", new { ErrorMessage = response.Message });
             }
             
         }
 
+        [Authorize(Policy = "IsAdministrator")]
         public IActionResult Delete(int Id)
         {
             var response = _usersService.Delete(Id);
 
             if (response.IsSuccessful)
             {
-                return RedirectToAction("ManageUsers");
+                return RedirectToAction("ManageUsers", new { SuccessMessage = "User deleted successfuly" });
             }
             else
             {
-                return RedirectToAction("ErrorNotFound", "Info");
+                return RedirectToAction("ManageUsers", new { ErrorMessage = response.Message });
             }
         }
     }

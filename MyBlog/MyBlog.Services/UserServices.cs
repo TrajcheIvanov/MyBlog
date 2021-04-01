@@ -25,12 +25,12 @@ namespace MyBlog.Services
             if (user.IsAdministrator)
             {
                 user.IsAdministrator = false;
-                Update(user);
+                ToggleAdminRole(user);
             }
             else
             {
                 user.IsAdministrator = true;
-                Update(user);
+                ToggleAdminRole(user);
             }
 
             return response;
@@ -46,7 +46,7 @@ namespace MyBlog.Services
             return _userRepository.GetById(int.Parse(userId));
         }
 
-        public StatusModel Update(User user)
+        public StatusModel ToggleAdminRole(User user)
         {
             var response = new StatusModel();
             var updateUser = _userRepository.GetById(user.Id);
@@ -55,15 +55,12 @@ namespace MyBlog.Services
             {
 
                 updateUser.Email = user.Email;
-
                 _userRepository.Update(updateUser);
-
-                response.IsSuccessful = true;
             }
             else
             {
                 response.IsSuccessful = false;
-                response.Message = $"The User with id {user.Id} was not found";
+                response.Message = "User was not found";
             }
 
             return response;
@@ -76,11 +73,12 @@ namespace MyBlog.Services
 
             if (userToDelete != null)
             {
-                _userRepository.Remove(userToDelete);
+                _userRepository.Delete(userToDelete);
             }
             else
             {
                 response.IsSuccessful = false;
+                response.Message = "User was not found";
             }
 
             return response;

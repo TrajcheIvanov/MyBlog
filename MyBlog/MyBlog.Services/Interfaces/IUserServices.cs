@@ -8,7 +8,7 @@ namespace MyBlog.Services.Interfaces
     {
         User GetDetails(string userId);
 
-        StatusModel Update(User user);
+        StatusModel ToggleAdminRole(User user);
 
         List<User> GetAllUsers();
 

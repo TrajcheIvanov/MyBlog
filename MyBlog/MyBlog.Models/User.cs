@@ -20,5 +20,7 @@ namespace MyBlog.Models
         public DateTime DateCreat { get; set; }
 
         public bool IsAdministrator { get; set; }
+
+        public List<Comment> Comments { get; set; }
     }
 }

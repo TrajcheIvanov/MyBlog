@@ -2,17 +2,15 @@
 using MyBlog.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace MyBlog.Repositories
 {
-    public class RegionsRepository : BaseRepository<Region>, IRegionsRepository
+    public class CommentsRepository : BaseRepository<Comment> , ICommentsRepository
     {
-
-        public RegionsRepository(MyBlogDbContext context) : base(context)
+        public CommentsRepository(MyBlogDbContext context) : base (context)
         {
+
         }
-        
     }
 }

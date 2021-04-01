@@ -5,9 +5,7 @@ using System.Text;
 
 namespace MyBlog.Repositories.Interfaces
 {
-    public interface IRegionsRepository : IBaseRepository<Region>
+    public interface ICommentsRepository : IBaseRepository<Comment>
     {
-      
-
     }
 }

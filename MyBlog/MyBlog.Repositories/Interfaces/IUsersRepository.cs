@@ -5,20 +5,11 @@ using System.Text;
 
 namespace MyBlog.Repositories.Interfaces
 {
-    public interface IUsersRepository
+    public interface IUsersRepository : IBaseRepository<User>
     {
         User GetByUsername(string username);
 
-        User GetById(int userId);
-
-        void Update(User user);
-
         bool CheckIfExists(string username, string email);
 
-        void Add(User user);
-
-        List<User> GetAll();
-
-        void Remove(User user);
     }
 }
