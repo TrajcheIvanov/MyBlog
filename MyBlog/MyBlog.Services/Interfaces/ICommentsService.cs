@@ -9,5 +9,6 @@ namespace MyBlog.Services.Interfaces
     {
         void Add(string comment, int eventId, int userId);
         StatusModel Delete(int id);
+        StatusModel Update(int id, string comment);
     }
 }

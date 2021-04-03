@@ -53,9 +53,37 @@ namespace MyBlog.Controllers
 
         }
 
+        [HttpGet]
+        [Authorize]
         public IActionResult Update(int id, int eventId)
         {
-            return RedirectToAction("MoreInfo", "Events", new { SuccessMessage = "Comment updated sucessfully", id = eventId });
+            return RedirectToAction("MoreInfo", "Events", new { commentForUpdateId = id, id = eventId });
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult Update(CommentUpdateModel commentUpdateModel)
+        {
+            var response = _commentsService.Update(commentUpdateModel.Id, commentUpdateModel.Comment);
+
+            try
+            {
+                if (response.IsSuccessful)
+                {
+                    return RedirectToAction("MoreInfo", "Events", new { SuccessMessage = "Comment updated sucessfully", id = commentUpdateModel.EventId });
+                }
+                else
+                {
+                    return RedirectToAction("MoreInfo", "Events", new { ErrorMessage = response.Message, id = commentUpdateModel.EventId });
+                }
+            }
+            catch (Exception)
+            {
+
+                return RedirectToAction("ErrorNotFound", "Info");
+            }
+
+
         }
     }
 }

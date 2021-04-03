@@ -37,7 +37,7 @@
 
 @if (ViewBag.SuccessMessage != null)
 {
-    <div class="alert alert-success" role="alert">
+    <div class="alert alert-warning" role="alert">
         @ViewBag.SuccessMessage
     </div>
 }
@@ -45,28 +45,38 @@
 
 @foreach (var comment in Model.Comments.OrderByDescending(x => x.DateCreated))
 {
-    <hr />
-
-    <p> <b>Comennted by:</b>  @comment.Username</p>
-    <p> <b>Date:</b>  @comment.DateCreated </p>
-    <p> @comment.Message</p>
-
-    if ((User.Identity.IsAuthenticated && (int.Parse(User.FindFirst("Id").Value)) == comment.UserId) || User.HasClaim("IsAdministrator", "True"))
+    @if (comment.Id == ViewBag.CommentForUpdateId)
     {
-<div class="row justify-content-end">
+<form asp-controller="Comments" asp-action="Update" method="post">
+    <input type="text" name="eventId" value="@Model.Id" hidden />
+    <input type="text" name="Id" value="@comment.Id" hidden />
+    <div class="form-group">
+        <textarea type="text" name="comment" class="form-control" cols="15" rows="3" required @*placeholder=@comment.Message*@>@comment.Message</textarea>
+    </div>
+    <button type="submit" class="btn btn-warning">Update Comment</button>
+</form>
+    }
+    else
+    {
+        <hr />
+        <p> <b>Comennted by:</b>  @comment.Username</p>
+        <p> <b>Date:</b>  @comment.DateCreated </p>
+        <p> @comment.Message</p>
 
-    <form asp-controller="Comments" asp-action="Delete" asp-route-id="@comment.Id" method="post">
-        <input type="text" name="eventId" value="@Model.Id" hidden />
-        <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure?')">Delete Comment</button>
-        @*<a class="btn btn-outline-danger btn-sm" href="/Comments/Delete/@comment.Id" onclick="return confirm('Are you sure?')">Delete Comment</a>*@
-    </form>
-    <form asp-controller="Comments" asp-action="Update" asp-route-id="@comment.Id" method="post">
-        <input type="text" name="eventId" value="@Model.Id" hidden />
-        <button type="submit" class="btn btn-outline-info btn-sm" onclick="return confirm('Are you sure?')">Update Comment</button>
-        @*<a class="btn btn-outline-info btn-sm" href="/Comments/Update/@comment.Id" style="margin-left: 5px" onclick="return confirm('Are you sure?')">Update Comment</a>*@
-    </form>
-   
-</div>
+        if ((User.Identity.IsAuthenticated && (int.Parse(User.FindFirst("Id").Value)) == comment.UserId) || User.HasClaim("IsAdministrator", "True"))
+        {
+            <div class="row justify-content-end">
+
+                <form asp-controller="Comments" asp-action="Delete" asp-route-id="@comment.Id" method="post">
+                    <input type="text" name="eventId" value="@Model.Id" hidden />
+                    <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure?')">Delete Comment</button>
+                </form>
+                <form asp-controller="Comments" asp-action="Update" asp-route-id="@comment.Id" method="get">
+                    <input type="text" name="eventId" value="@Model.Id" hidden />
+                    <button type="submit" class="btn btn-outline-info btn-sm" onclick="return confirm('Are you sure?')">Update Comment</button>
+                </form>
+            </div>
+        }
 
     }
 }

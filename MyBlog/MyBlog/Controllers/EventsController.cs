@@ -41,11 +41,12 @@ namespace MyBlog.Controllers
         }
 
         [AllowAnonymous]
-        public IActionResult MoreInfo(int id , string errorMessage, string successMessage)
+        public IActionResult MoreInfo(int id , string errorMessage, string successMessage, int commentForUpdateId)
         {
 
             ViewBag.SuccessMessage = successMessage;
             ViewBag.ErrorMessage = errorMessage;
+            ViewBag.CommentForUpdateId = commentForUpdateId;
 
             try
             {

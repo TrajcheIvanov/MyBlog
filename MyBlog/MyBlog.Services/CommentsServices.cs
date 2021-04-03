@@ -48,5 +48,25 @@ namespace MyBlog.Services
 
             return response;
         }
+
+        public StatusModel Update(int id, string comment)
+        {
+            var response = new StatusModel();
+
+            var commentToUpdate = _commentsRepository.GetById(id);
+
+            if (commentToUpdate != null)
+            {
+                commentToUpdate.Message = comment;
+                _commentsRepository.Update(commentToUpdate);
+            }
+            else
+            {
+                response.IsSuccessful = false;
+                response.Message = "Comment was not found";
+            }
+
+            return response;
+        }
     }
 }
