@@ -51,7 +51,7 @@ namespace MyBlog
                 });
             });
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddTransient<IEventsService, EventsService>();
             services.AddTransient<IRegionsService, RegionsService>();
             services.AddTransient<IAuthService, AuthService>();

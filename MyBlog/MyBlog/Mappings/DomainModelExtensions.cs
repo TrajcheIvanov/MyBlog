@@ -106,6 +106,7 @@ namespace MyBlog.Mappings
                 DateCreated = comment.DateCreated,
                 Username = comment.User.Username,
                 Id = comment.Id,
+                UserId = comment.User.Id
             };
         }
     }

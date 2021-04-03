@@ -27,5 +27,35 @@ namespace MyBlog.Controllers
 
             return RedirectToAction("MoreInfo", "Events", new { id = commentCreateModel.EventId });
         }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult Delete(int id, int eventId)
+        {
+            var response = _commentsService.Delete(id);
+
+            try
+            {
+                if (response.IsSuccessful)
+                {
+                    return RedirectToAction("MoreInfo", "Events", new { SuccessMessage = "Comment deleted sucessfully" , id = eventId });
+                }
+                else
+                {
+                    return RedirectToAction("MoreInfo", "Events", new { ErrorMessage = response.Message , id = eventId });
+                }
+            }
+            catch (Exception)
+            {
+
+                return RedirectToAction("ErrorNotFound", "Info");
+            }
+
+        }
+
+        public IActionResult Update(int id, int eventId)
+        {
+            return RedirectToAction("MoreInfo", "Events", new { SuccessMessage = "Comment updated sucessfully", id = eventId });
+        }
     }
 }

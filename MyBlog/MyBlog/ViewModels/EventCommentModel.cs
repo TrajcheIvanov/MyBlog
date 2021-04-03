@@ -11,5 +11,6 @@ namespace MyBlog.ViewModels
         public string Message { get; set; }
         public DateTime DateCreated { get; set; }
         public string Username { get; set; }
+        public int UserId { get; set; }
     }
 }

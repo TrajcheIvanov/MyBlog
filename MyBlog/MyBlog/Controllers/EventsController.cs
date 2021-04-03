@@ -41,8 +41,12 @@ namespace MyBlog.Controllers
         }
 
         [AllowAnonymous]
-        public IActionResult MoreInfo(int id)
+        public IActionResult MoreInfo(int id , string errorMessage, string successMessage)
         {
+
+            ViewBag.SuccessMessage = successMessage;
+            ViewBag.ErrorMessage = errorMessage;
+
             try
             {
                 var even = _service.GetEventById(id);
