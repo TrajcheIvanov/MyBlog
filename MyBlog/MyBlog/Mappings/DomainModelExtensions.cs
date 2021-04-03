@@ -1,6 +1,7 @@
 ﻿using MyBlog.Models;
 using MyBlog.ViewModels;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MyBlog.Mappings
 {
@@ -35,7 +36,7 @@ namespace MyBlog.Mappings
         {
             return new EventMoreInfoModel()
             {
-                
+                Id = even.Id,
                 Name = even.Name,
                 Location = even.Location,
                 Date = even.Date,
@@ -43,6 +44,7 @@ namespace MyBlog.Mappings
                 OrganizedBy = even.OrganizedBy,
                 ImgUrl = even.ImgUrl,
                 DateCreated = even.DateCreated,
+                Comments = even.Comments.Select(x => x.ToCommentModel()).ToList()
             };
         }
 
@@ -94,6 +96,17 @@ namespace MyBlog.Mappings
             }
 
             return manageUsers;
+        }
+
+        public static EventCommentModel ToCommentModel(this Comment comment)
+        {
+            return new EventCommentModel()
+            {
+                Message = comment.Message,
+                DateCreated = comment.DateCreated,
+                Username = comment.User.Username,
+                Id = comment.Id,
+            };
         }
     }
 }

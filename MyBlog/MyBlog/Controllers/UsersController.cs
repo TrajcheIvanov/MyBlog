@@ -59,7 +59,7 @@ namespace MyBlog.Controllers
                 {
                     var userModel = user.ToModel();
                     userModel.Id = int.Parse(User.FindFirst("Id").Value);
-                    var response = _usersService.ToggleAdminRole(userModel);
+                    var response = _usersService.Udpate(userModel);
 
                     if (response.IsSuccessful)
                     {

@@ -6,5 +6,6 @@ namespace MyBlog.Services.Interfaces
 {
     public interface ICommentsService
     {
+        void Add(string comment, int eventId, int userId);
     }
 }

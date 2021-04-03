@@ -25,12 +25,12 @@ namespace MyBlog.Services
             if (user.IsAdministrator)
             {
                 user.IsAdministrator = false;
-                ToggleAdminRole(user);
+                Udpate(user);
             }
             else
             {
                 user.IsAdministrator = true;
-                ToggleAdminRole(user);
+                Udpate(user);
             }
 
             return response;
@@ -46,7 +46,7 @@ namespace MyBlog.Services
             return _userRepository.GetById(int.Parse(userId));
         }
 
-        public StatusModel ToggleAdminRole(User user)
+        public StatusModel Udpate(User user)
         {
             var response = new StatusModel();
             var updateUser = _userRepository.GetById(user.Id);

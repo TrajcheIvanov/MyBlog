@@ -56,6 +56,7 @@ namespace MyBlog
             services.AddTransient<IRegionsService, RegionsService>();
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IUserServices, UserServices>();
+            services.AddTransient<ICommentsService, CommentsServices>();
 
             services.AddTransient<IEventsRepository, EventsRepository>();
             services.AddTransient<IRegionsRepository, RegionsRepository>();

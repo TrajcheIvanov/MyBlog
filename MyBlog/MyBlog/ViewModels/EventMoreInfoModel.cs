@@ -1,10 +1,12 @@
 ﻿
 using System;
+using System.Collections.Generic;
 
 namespace MyBlog.ViewModels
 {
     public class EventMoreInfoModel
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         
         public string Location { get; set; }
@@ -18,6 +20,8 @@ namespace MyBlog.ViewModels
         public string ImgUrl { get; set; }
 
         public DateTime DateCreated { get; set; }
+
+        public List<EventCommentModel> Comments { get; set; }
 
         
     }

@@ -1,4 +1,5 @@
-﻿using MyBlog.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using MyBlog.Models;
 using MyBlog.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,16 @@ namespace MyBlog.Repositories
         {
             var events = _context.Events.Where(x => x.Name.Contains(name)).ToList();
             return events;
+        }
+
+        public override Event GetById(int entityId)
+        {
+            var even = _context.Events
+                .Include(x => x.Comments)
+                    .ThenInclude(x => x.User)
+                .FirstOrDefault(x => x.Id == entityId);
+
+            return even;
         }
     }
 }
