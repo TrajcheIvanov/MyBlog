@@ -1,5 +1,7 @@
 ﻿
 
+using System.Collections.Generic;
+
 namespace MyBlog.ViewModels
 {
     public class UsersDetailsModel
@@ -7,5 +9,7 @@ namespace MyBlog.ViewModels
         public string Username { get; set; }
 
         public string Email { get; set; }
+
+        public List<CommentUserDetailsModel> Comments { get; set; }
     }
 }

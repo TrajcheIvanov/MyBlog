@@ -26,10 +26,24 @@
             <p> Username:</p>
             <p> @Model.Username</p>
             <br />
-            <p> E-mail:s</p>
+            <p> E-mail:</p>
             <p> @Model.Email</p>
             <br />
             <a href="/Users/Update/@User.FindFirst("Id").Value" class="btn btn-warning"><b> Edit</b></a>
         </div>
     </div>
 </div>
+
+<hr />
+<h3>Comments</h3>
+<hr />
+
+@foreach (var comment in Model.Comments)
+{
+    <hr />
+    <p> <b>Comennted on:</b>  @comment.EventName</p>
+    <a href="/Events/MoreInfo/@comment.EventId" class="btn btn-outline-success btn-sm" >Go to the event >>> </a>
+    <p> <b>Date:</b>  @comment.DateCreated </p>
+    <p> @comment.Message</p>
+
+}

@@ -68,6 +68,7 @@ namespace MyBlog.Mappings
             {
                 Username = user.Username,
                 Email = user.Email,
+                Comments = user.Comments.Select(x=> x.ToCommentUSerModel()).ToList()
             };
         }
 
@@ -107,6 +108,19 @@ namespace MyBlog.Mappings
                 Username = comment.User.Username,
                 Id = comment.Id,
                 UserId = comment.User.Id
+            };
+        }
+
+        public static CommentUserDetailsModel ToCommentUSerModel(this Comment comment)
+        {
+            return new CommentUserDetailsModel()
+            {
+
+                Message = comment.Message,
+                DateCreated = comment.DateCreated,
+                EventId = comment.EventId,
+                UserId = comment.UserId,
+                EventName = comment.Event.Name
             };
         }
     }

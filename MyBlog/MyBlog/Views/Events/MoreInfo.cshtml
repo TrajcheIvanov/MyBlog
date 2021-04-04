@@ -16,6 +16,10 @@
     <p class="card-text"><b>Date Created:</b> @Model.DateCreated</p>
 </div>
 
+<hr />
+<h3>Comments</h3>
+<hr />
+
 @if (User.Identity.IsAuthenticated)
 {
     <form asp-controller="Comments" asp-action="Add" method="post">
@@ -47,14 +51,14 @@
 {
     @if (comment.Id == ViewBag.CommentForUpdateId)
     {
-<form asp-controller="Comments" asp-action="Update" method="post">
-    <input type="text" name="eventId" value="@Model.Id" hidden />
-    <input type="text" name="Id" value="@comment.Id" hidden />
-    <div class="form-group">
-        <textarea type="text" name="comment" class="form-control" cols="15" rows="3" required @*placeholder=@comment.Message*@>@comment.Message</textarea>
-    </div>
-    <button type="submit" class="btn btn-warning">Update Comment</button>
-</form>
+        <form asp-controller="Comments" asp-action="Update" method="post">
+            <input type="text" name="eventId" value="@Model.Id" hidden />
+            <input type="text" name="Id" value="@comment.Id" hidden />
+            <div class="form-group">
+                <textarea type="text" name="comment" class="form-control" cols="15" rows="3" required @*placeholder=@comment.Message*@>@comment.Message</textarea>
+            </div>
+            <button type="submit" class="btn btn-warning">Update Comment</button>
+        </form>
     }
     else
     {

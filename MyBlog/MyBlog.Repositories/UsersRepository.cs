@@ -1,4 +1,5 @@
-﻿using MyBlog.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using MyBlog.Models;
 using MyBlog.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,16 @@ namespace MyBlog.Repositories
             return _context.Users.Any(x => x.Username == username || x.Email == email);
         }
 
+        public override User GetById(int entityId)
+        {
+            var user = _context.Users
+                .Include(x => x.Comments)
+                .ThenInclude(x => x.Event).ToList()
+                //    .ThenInclude(x => x.Name)
+                .FirstOrDefault(x => x.Id == entityId);
 
-        
+            return user;
+        }
+
     }
 }
