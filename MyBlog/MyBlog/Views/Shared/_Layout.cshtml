@@ -3,10 +3,11 @@
 <head>
     <title>@ViewBag.Title</title>
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@200;400&display=swap" rel="stylesheet">
     <link href="~/css/BasicStyle.css" rel="stylesheet" />
 </head>
 <body>
-    <div class="container-fluid">
+    <div class="container-fluid" id="navbar">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <a class="navbar-brand" href="/Events/Overview">MTB Macedonia</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -56,7 +57,7 @@
     </div>
     @if (ViewBag.Title == "Overview")
     {
-<div class="container-fluid">
+<div class="container-fluid" id="carousel">
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
             <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -85,14 +86,16 @@
     </div>
 </div>}
 
-    <div class="container">
+    <div class="container-fluid" id="bodyContainer">
         @RenderBody()
     </div>
-    <div class="container">
-        <p style="text-align:center"> ---------------------------------------------------</p>
+
+    <div class="container-fluid footer">
         <p style="text-align:center"> &#169; All rights reserved</p>
         <p style="text-align:center">TryMay 2021</p>
     </div>
+
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </body>

@@ -3,33 +3,42 @@
     ViewBag.Title = "Overview";
 }
 
-<form action="/Events/Overview" method="get" style="width:500px; margin:7px" class="form-inline">
-    <div class="form-group">
-        <input type="text" name="Name" value="" class="form-control" placeholder="Search by event name" />
-        <input type="submit" value="Search" class="btn btn-secondary" />
-    </div>
-</form>
+<div class="row justify-content-center" id="searchOverview">
+    <form action="/Events/Overview" method="get" style="width:500px; margin:7px" class="form-inline">
+        <div class="form-group">
+            <input type="text" name="Name" value="" class="form-control" placeholder="Search by event name" />
+            <input type="submit" value="Search" class="btn btn-secondary" />
+        </div>
+    </form>
+</div>
 
-<div class="container">
-    <div class="row">
+
+
+<div class="container-fluid" id="card-container">
+    
         @foreach (var even in Model)
         {
-        <div class="col col-4">
+        @*<div class="col col-3">
 
             <div class="card" style="margin:7px">
                 <h3 class="card-header">@even.Name</h3>
                 <div class="card-body">
-                    <img src="@even.ImgUrl" style="object-fit: cover; width: 100%; height:20vw" alt="...">
+                    <img src="@even.ImgUrl"  alt="...">
                     <p class="card-text"> <b>Date:</b> @even.Date</p>
-                    @*<p class="card-text"><b>Location:</b> @even.Location</p>
-                <p class="card-text"><b>Organized By:</b> @even.OrganizedBy</p>
-                <p class="card-text"><b>Description:</b> @even.Description</p>*@
                     <a href="/Events/MoreInfo/@even.Id" class="btn btn-dark">More Info...</a>
                 </div>
             </div>
+        </div>*@
+
+        <div class="card">
+            <h3 class="card-header">@even.Name</h3>
+            <img src="@even.ImgUrl" alt="...">
+            <p class="card-text"> <b>Date:</b> @even.Date</p>
+            <a href="/Events/MoreInfo/@even.Id" class="btn btn-dark button">More Info...</a>
         </div>
+
         }
 
-    </div>
+   
 
 </div>

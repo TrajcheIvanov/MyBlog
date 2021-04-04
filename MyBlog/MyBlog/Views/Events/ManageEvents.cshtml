@@ -29,7 +29,7 @@
 
 <br />
 <p>
-    <a class="btn btn-success" href="/Events/Create">Add Event</a>
+    <a class="btn btn-secondary button" href="/Events/Create">Add Event</a>
 </p>
 <br />
 
@@ -46,7 +46,7 @@ else
                 <th scope="col">Name</th>
                 <th scope="col">Date</th>
                 <th scope="col">Location</th>
-                <th scope="col"></th>
+                <th scope="col">Maange Event</th>
             </tr>
         </thead>
         <tbody>
@@ -57,7 +57,7 @@ else
                 <td>@even.Name</td>
                 <td>@even.Date</td>
                 <td>@even.Location</td>
-                <td class="text-center">
+                <td >
                     <a href="/Events/Update/@even.Id" class="text-warning">Edit Event</a> |
                     <a href="/Events/Delete/@even.Id" class="text-danger" onclick="return confirm('Are you sure?')">Delete</a>
                 </td>

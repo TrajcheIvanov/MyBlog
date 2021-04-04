@@ -4,7 +4,7 @@
     ViewBag.Title = "More Info";
 }
 
-<div class="container" style="border: 3px solid grey; margin:10px; padding:10px">
+<div class="container">
     <br />
     <br />
     <h3 class="card-header">@Model.Name</h3>
@@ -14,74 +14,76 @@
     <p class="card-text"><b>Organized By:</b> @Model.OrganizedBy</p>
     <p class="card-text"><b>Description:</b> @Model.Description</p>
     <p class="card-text"><b>Date Created:</b> @Model.DateCreated</p>
-</div>
-
-<hr />
-<h3>Comments</h3>
-<hr />
-
-@if (User.Identity.IsAuthenticated)
-{
-    <form asp-controller="Comments" asp-action="Add" method="post">
-        <input type="text" name="eventId" value="@Model.Id" hidden />
-        <div class="form-group">
-            <textarea type="text" name="comment" class="form-control" cols="20" rows="5" required></textarea>
-        </div>
-        <button type="submit" class="btn btn-success">Add Comment</button>
-    </form>
-}
-
-<br />
-@if (ViewBag.ErrorMessage != null)
-{
-    <div class="alert alert-danger" role="alert">
-        @ViewBag.ErrorMessage
-    </div>
-}
-
-@if (ViewBag.SuccessMessage != null)
-{
-    <div class="alert alert-warning" role="alert">
-        @ViewBag.SuccessMessage
-    </div>
-}
 
 
-@foreach (var comment in Model.Comments.OrderByDescending(x => x.DateCreated))
-{
-    @if (comment.Id == ViewBag.CommentForUpdateId)
+    <hr />
+    <h3>Comments</h3>
+    <hr />
+
+    @if (User.Identity.IsAuthenticated)
     {
-        <form asp-controller="Comments" asp-action="Update" method="post">
+        <form asp-controller="Comments" asp-action="Add" method="post">
             <input type="text" name="eventId" value="@Model.Id" hidden />
-            <input type="text" name="Id" value="@comment.Id" hidden />
             <div class="form-group">
-                <textarea type="text" name="comment" class="form-control" cols="15" rows="3" required @*placeholder=@comment.Message*@>@comment.Message</textarea>
+                <textarea type="text" name="comment" class="form-control" cols="20" rows="5" required></textarea>
             </div>
-            <button type="submit" class="btn btn-warning">Update Comment</button>
+            <button type="submit" class="btn btn-primary">Add Comment</button>
         </form>
     }
-    else
+
+    <br />
+    @if (ViewBag.ErrorMessage != null)
     {
-        <hr />
-        <p> <b>Comennted by:</b>  @comment.Username</p>
-        <p> <b>Date:</b>  @comment.DateCreated </p>
-        <p> @comment.Message</p>
-
-        if ((User.Identity.IsAuthenticated && (int.Parse(User.FindFirst("Id").Value)) == comment.UserId) || User.HasClaim("IsAdministrator", "True"))
-        {
-            <div class="row justify-content-end">
-
-                <form asp-controller="Comments" asp-action="Delete" asp-route-id="@comment.Id" method="post">
-                    <input type="text" name="eventId" value="@Model.Id" hidden />
-                    <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure?')">Delete Comment</button>
-                </form>
-                <form asp-controller="Comments" asp-action="Update" asp-route-id="@comment.Id" method="get">
-                    <input type="text" name="eventId" value="@Model.Id" hidden />
-                    <button type="submit" class="btn btn-outline-info btn-sm" onclick="return confirm('Are you sure?')">Update Comment</button>
-                </form>
-            </div>
-        }
-
+        <div class="alert alert-danger" role="alert">
+            @ViewBag.ErrorMessage
+        </div>
     }
-}
+
+    @if (ViewBag.SuccessMessage != null)
+    {
+        <div class="alert alert-warning" role="alert">
+            @ViewBag.SuccessMessage
+        </div>
+    }
+
+
+    @foreach (var comment in Model.Comments.OrderByDescending(x => x.DateCreated))
+    {
+        @if (comment.Id == ViewBag.CommentForUpdateId)
+        {
+            <form asp-controller="Comments" asp-action="Update" method="post">
+                <input type="text" name="eventId" value="@Model.Id" hidden />
+                <input type="text" name="Id" value="@comment.Id" hidden />
+                <div class="form-group">
+                    <textarea type="text" name="comment" class="form-control" cols="15" rows="3" required >@comment.Message</textarea>
+                </div>
+                <button type="submit" class="btn btn-warning">Update Comment</button>
+            </form>
+        }
+        else
+        {
+            <hr />
+            <p> <b>Comennted by:</b>  @comment.Username</p>
+            <p> <b>Date:</b>  @comment.DateCreated </p>
+            <p> @comment.Message</p>
+
+            if ((User.Identity.IsAuthenticated && (int.Parse(User.FindFirst("Id").Value)) == comment.UserId) || User.HasClaim("IsAdministrator", "True"))
+            {
+                <div class="row justify-content-end">
+
+                    <form asp-controller="Comments" asp-action="Delete" asp-route-id="@comment.Id" method="post">
+                        <input type="text" name="eventId" value="@Model.Id" hidden />
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')" style="margin-right:1rem">Delete Comment</button>
+                    </form>
+                    <form asp-controller="Comments" asp-action="Update" asp-route-id="@comment.Id" method="get">
+                        <input type="text" name="eventId" value="@Model.Id" hidden />
+                        <button type="submit" class="btn btn-info btn-sm" onclick="return confirm('Are you sure?')">Edit Comment</button>
+                    </form>
+                </div>
+            }
+
+        }
+    }
+</div>
+
 

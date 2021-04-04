@@ -1,20 +1,107 @@
-﻿body {
-    background-color: lightgray;
+﻿* {
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+    transition: all .2s linear;
+    font-family:'Exo 2', sans-serif;
+
+}
+
+body {
+    background-color: darkseagreen;
+}
+
+#card-container {
+    width:95%;
+    margin: 1rem auto;
+    display:flex;
+    flex-wrap:wrap;
+    align-content:center;
+    justify-content:space-evenly;
+    align-content:center;
 }
 
 .card {
-    height: auto;
-    /*width: 30rem;*/
-    padding: 2rem;
-    margin: 1rem;
-    text-align: center;
-    /*flex-wrap: wrap;*/
-    border: solid 3px grey;
-    border-radius: 1rem;
+    height:auto;
+    width:30rem;
+    background:white;
+    padding:1rem;
+    margin:2rem;
+    text-align:center;
+    border-radius:1.5rem;
 }
 
-img {
-    height: 50%;
-    width: 100%;
-    object-fit: cover;
+.card:hover{
+    transform:scale(0.9);
+}
+
+#searchOverview {
+margin-top: 1rem;
+}
+
+
+#navbar {
+    padding-right: 0;
+    padding-left: 0;
+    margin-right: auto;
+    margin-left: auto
+}
+
+#carousel {
+    padding-right: 0;
+    padding-left: 0;
+    margin-right: auto;
+    margin-left: auto
+}
+
+#navbar a:hover {
+    color: darkseagreen;
+    font-weight:800;
+    text-decoration:underline;
+}
+
+.button {
+    outline:none;
+    border:none;
+    border-radius:5rem;
+    color:grey;
+    font-size:1.2rem;
+    font-weight:bold;
+    text-transform:capitalize;
+    letter-spacing:.2rem;
+    cursor:pointer;
+    position:relative;
+    z-index:1;
+    overflow:hidden;
+    background-color:lightgray;
+}
+
+    .button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: #343A40;
+        height: 100%;
+        width: 0%;
+        transition: .4s;
+        z-index: -1;
+    }
+
+    .button:hover::before{
+        width:100%;
+
+    }
+
+#bodyContainer {
+    min-height:85vh;
+}
+
+.footer {
+    background-color: #343A40;
+    color: white;
+    margin: 0;
+    padding: 0;
+    min-height: 10vh;
+    margin-top:2rem;
 }

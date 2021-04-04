@@ -4,46 +4,50 @@
     ViewBag.Title = "User Details";
 }
 
-<br />
-<br />
-@if (ViewBag.ErrorMessage != null)
-{
-    <div class="alert alert-danger" role="alert">
-        @ViewBag.ErrorMessage
-    </div>
-}
-
-@if (ViewBag.SuccessMessage != null)
-{
-    <div class="alert alert-success" role="alert">
-        @ViewBag.SuccessMessage
-    </div>
-}
-
 <div class="container">
-    <div class="row">
-        <div class="col-8">
-            <p> Username:</p>
-            <p> @Model.Username</p>
-            <br />
-            <p> E-mail:</p>
-            <p> @Model.Email</p>
-            <br />
-            <a href="/Users/Update/@User.FindFirst("Id").Value" class="btn btn-warning"><b> Edit</b></a>
+
+    <br />
+    <br />
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @ViewBag.ErrorMessage
+        </div>
+    }
+
+    @if (ViewBag.SuccessMessage != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @ViewBag.SuccessMessage
+        </div>
+    }
+
+    <div class="container">
+        <div class="row">
+            <div class="col-8">
+                <p> <b>Username:</b></p>
+                <p> @Model.Username</p>
+                <br />
+                <p> <b>E-mail:</b></p>
+                <p> @Model.Email</p>
+                <br />
+                <a href="/Users/Update/@User.FindFirst("Id").Value" class="btn btn-secondary button"><b> Edit</b></a>
+            </div>
         </div>
     </div>
+
+    <hr />
+    <h2><b>Comments</b></h2>
+    <hr />
+
+    @foreach (var comment in Model.Comments)
+    {
+        <hr />
+        <p> <b>Comennted on:</b>  @comment.EventName</p>
+        <a href="/Events/MoreInfo/@comment.EventId" class="btn btn-primary btn-sm">Go to the event >>> </a>
+        <p> <b>Date:</b>  @comment.DateCreated </p>
+        <p> @comment.Message</p>
+
+    }
 </div>
 
-<hr />
-<h3>Comments</h3>
-<hr />
-
-@foreach (var comment in Model.Comments)
-{
-    <hr />
-    <p> <b>Comennted on:</b>  @comment.EventName</p>
-    <a href="/Events/MoreInfo/@comment.EventId" class="btn btn-outline-success btn-sm" >Go to the event >>> </a>
-    <p> <b>Date:</b>  @comment.DateCreated </p>
-    <p> @comment.Message</p>
-
-}
