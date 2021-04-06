@@ -11,22 +11,39 @@ namespace MyBlog.Services
     public class CommentsServices : ICommentsService
     {
         private ICommentsRepository _commentsRepository;
-        public CommentsServices(ICommentsRepository commentsRepository)
+
+        private IEventsService _eventsService;
+        public CommentsServices(ICommentsRepository commentsRepository, IEventsService eventsService)
         {
             _commentsRepository = commentsRepository;
+            _eventsService = eventsService;
         }
 
-        public void Add(string comment, int eventId, int userId)
+        public StatusModel Add(string comment, int eventId, int userId)
         {
-            var newComment = new Comment()
-            {
-                Message = comment,
-                DateCreated = DateTime.Now,
-                EventId = eventId,
-                UserId = userId
-            };
+            var response = new StatusModel();
+            var even = _eventsService.GetEventById(eventId);
 
-            _commentsRepository.Add(newComment);
+            if (even != null)
+            {
+                var newComment = new Comment()
+                {
+                    Message = comment,
+                    DateCreated = DateTime.Now,
+                    EventId = eventId,
+                    UserId = userId
+                };
+
+                _commentsRepository.Add(newComment);
+            }
+            else
+            {
+                response.IsSuccessful = false;
+                response.Message = $"The event with Id {eventId} was not found";
+            }
+            
+
+            return response;
         }
 
         public StatusModel Delete(int id)

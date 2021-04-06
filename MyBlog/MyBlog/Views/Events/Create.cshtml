@@ -6,38 +6,41 @@
     ViewBag.Title = "Add Event";
 }
 
-<form asp-controller="Events" asp-action="Create" method="post">
+<form asp-controller="Events" asp-action="Create" method="post" onsubmit="return validateForm()">
     <div class="form-group">
         <label class="control-label" asp-for="Name">Name</label>
-        <input type="text" asp-for="Name" class="form-control" />
+        <input type="text" asp-for="Name" class="form-control" required/>
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label class="control-label" asp-for="Location">Location</label>
-        <input type="text" asp-for="Location" class="form-control" />
+        <input type="text" asp-for="Location" class="form-control" required/>
         <span asp-validation-for="Location" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label class="control-label" asp-for="ImgUrl">Img Url</label>
-        <input type="text" asp-for="ImgUrl" class="form-control" />
+        <input type="text" asp-for="ImgUrl" class="form-control"required />
         <span asp-validation-for="ImgUrl" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label class="control-label" asp-for="Date">Date</label>
-        <input type="text" asp-for="Date" class="form-control" />
+        <input type="text" asp-for="Date" class="form-control"required />
         <span asp-validation-for="Date" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label class="control-label" asp-for="OrganizedBy">Organized By</label>
-        <input type="text" asp-for="OrganizedBy" class="form-control" />
+        <input type="text" asp-for="OrganizedBy" class="form-control"required />
         <span asp-validation-for="OrganizedBy" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label class="control-label" asp-for="Description">Description </label>
-        <textarea type="text" asp-for="Description" class="form-control" cols="20" rows="5"></textarea>
+        <textarea type="text" asp-for="Description" class="form-control" cols="20" rows="5" required></textarea>
         <span asp-validation-for="Description" class="text-danger"></span>
     </div>
     <div class="form-group">
         <input type="submit" value="Add Event" class="btn btn-warning" />
     </div>
 </form>
+@section Scripts{
+    <script src="~/js/validator.js"></script>
+}

@@ -23,10 +23,17 @@ namespace MyBlog.Controllers
         public IActionResult Overview(string name)
         {
             var events = _service.GetEventByName(name);
+            var overviewDataModel = new EventOverviewDataModel();
 
             var eventOverviewModels = events.Select(x => x.ToOverviewModel()).ToList();
+            var topFiveViewedMovies = events.Select(x => x.ToTopFiveViewed()).OrderByDescending(x => x.Views).Take(5).ToList();
+            var topNewFiveMovies = events.Select(x => x.ToTopNewFiveModel()).OrderByDescending(x => x.DateCreated).Take(5).ToList();
 
-            return View(eventOverviewModels);
+            overviewDataModel.TopFiveViewed = topFiveViewedMovies;
+            overviewDataModel.TopNewFive = topNewFiveMovies;
+            overviewDataModel.OverviewEvents = eventOverviewModels;
+
+            return View(overviewDataModel);
         }
 
         public IActionResult ManageEvents(string errorMessage, string successMessage, string updateMessage)
@@ -50,7 +57,7 @@ namespace MyBlog.Controllers
 
             try
             {
-                var even = _service.GetEventById(id);
+                var even = _service.GetEventDetails(id);
                 if (even == null)
                 {
                     return RedirectToAction("ErrorNotFound", "Info");

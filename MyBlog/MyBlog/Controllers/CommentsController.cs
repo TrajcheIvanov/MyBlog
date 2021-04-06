@@ -23,9 +23,18 @@ namespace MyBlog.Controllers
         {
             var userId = int.Parse(User.FindFirst("Id").Value);
 
-            _commentsService.Add(commentCreateModel.Comment, commentCreateModel.EventId, userId);
+            var response = _commentsService.Add(commentCreateModel.Comment, commentCreateModel.EventId, userId);
 
-            return RedirectToAction("MoreInfo", "Events", new { id = commentCreateModel.EventId });
+            if (response.IsSuccessful)
+            {
+                return RedirectToAction("MoreInfo", "Events", new { id = commentCreateModel.EventId });
+            }
+            else
+            {
+                return RedirectToAction("ActionNonSuccessful", "Info", new { Message = response.Message });
+            }
+
+            
         }
 
         [HttpPost]

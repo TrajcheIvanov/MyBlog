@@ -11,6 +11,7 @@ namespace MyBlog.Services
     {
         private IEventsRepository _eventsRepository { get; set; }
 
+
         public EventsService(IEventsRepository eventsRepository)
         {
             _eventsRepository = eventsRepository;
@@ -24,6 +25,20 @@ namespace MyBlog.Services
         public Event GetEventById(int id)
         {
             return _eventsRepository.GetById(id);
+        }
+
+        public Event GetEventDetails(int Id)
+        {
+            var even = _eventsRepository.GetById(Id);
+
+            if (even == null)
+            {
+                return even;
+            }
+
+            even.Views++;
+            _eventsRepository.Update(even);
+            return even;
         }
 
         public void CreateEvent(Event even)

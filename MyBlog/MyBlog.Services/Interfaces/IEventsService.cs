@@ -12,6 +12,7 @@ namespace MyBlog.Services.Interfaces
         List<Event> GetEventByName(string name);
         Event GetEventById(int id);
 
+        Event GetEventDetails(int Id);
         void CreateEvent(Event even);
 
         void Delete(int Id);

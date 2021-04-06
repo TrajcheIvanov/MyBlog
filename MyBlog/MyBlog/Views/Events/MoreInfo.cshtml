@@ -22,7 +22,7 @@
 
     @if (User.Identity.IsAuthenticated)
     {
-        <form asp-controller="Comments" asp-action="Add" method="post">
+        <form asp-controller="Comments" asp-action="Add" method="post" onsubmit="return validateForm()">
             <input type="text" name="eventId" value="@Model.Id" hidden />
             <div class="form-group">
                 <textarea type="text" name="comment" class="form-control" cols="20" rows="5" required></textarea>
@@ -55,7 +55,7 @@
                 <input type="text" name="eventId" value="@Model.Id" hidden />
                 <input type="text" name="Id" value="@comment.Id" hidden />
                 <div class="form-group">
-                    <textarea type="text" name="comment" class="form-control" cols="15" rows="3" required >@comment.Message</textarea>
+                    <textarea type="text" name="comment" class="form-control" cols="15" rows="3" required>@comment.Message</textarea>
                 </div>
                 <button type="submit" class="btn btn-warning">Update Comment</button>
             </form>
@@ -86,4 +86,6 @@
     }
 </div>
 
-
+@section Scripts{
+    <script src="~/js/validator.js"></script>
+}

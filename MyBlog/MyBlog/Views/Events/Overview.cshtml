@@ -1,44 +1,87 @@
-﻿@model List<MyBlog.ViewModels.EventOverviewModel> 
-@{ 
+﻿@model MyBlog.ViewModels.EventOverviewDataModel
+@{
     ViewBag.Title = "Overview";
 }
 
-<div class="row justify-content-center" id="searchOverview">
-    <form action="/Events/Overview" method="get" style="width:500px; margin:7px" class="form-inline">
-        <div class="form-group">
-            <input type="text" name="Name" value="" class="form-control" placeholder="Search by event name" />
-            <input type="submit" value="Search" class="btn btn-secondary" />
-        </div>
-    </form>
-</div>
-
-
-
-<div class="container-fluid" id="card-container">
-    
-        @foreach (var even in Model)
-        {
-        @*<div class="col col-3">
-
-            <div class="card" style="margin:7px">
-                <h3 class="card-header">@even.Name</h3>
-                <div class="card-body">
-                    <img src="@even.ImgUrl"  alt="...">
-                    <p class="card-text"> <b>Date:</b> @even.Date</p>
-                    <a href="/Events/MoreInfo/@even.Id" class="btn btn-dark">More Info...</a>
-                </div>
-            </div>
-        </div>*@
-
-        <div class="card">
-            <h3 class="card-header">@even.Name</h3>
-            <img src="@even.ImgUrl" alt="...">
-            <p class="card-text"> <b>Date:</b> @even.Date</p>
-            <a href="/Events/MoreInfo/@even.Id" class="btn btn-dark button">More Info...</a>
-        </div>
-
+@section Styles{
+    <style>
+        a {
+            cursor: pointer;
+            text-decoration: none;
         }
 
-   
+            a:hover {
+                text-decoration: none;
+            }
 
+        .recipeSidebarCard {
+            padding: 2px;
+            border: 1px solid #343A40;
+            margin: 2px;
+            color: white;
+            background-color: #343A40;
+            border-radius: 5px;
+        }
+
+            .recipeSidebarCard:hover {
+                background-color: white;
+                color: #343A40;
+                transform: scale(0.9);
+            }
+    </style>
+}
+
+<div class="row">
+    <div class="col-9">
+        <div class="row justify-content-center" id="searchOverview">
+            <form action="/Events/Overview" method="get" style="width:500px; margin:7px" class="form-inline">
+                <div class="form-group">
+                    <input type="text" name="Name" value="" class="form-control" placeholder="Search by event name" />
+                    <input type="submit" value="Search" class="btn btn-secondary" />
+                </div>
+            </form>
+        </div>
+        <div class="row flex-wrap justify-content-around">
+            @foreach (var even in Model.OverviewEvents)
+            {
+                <div class="card col-3">
+                    <h3 class="card-header">@even.Name</h3>
+                    <img src="@even.ImgUrl" alt="...">
+                    <p class="card-text"> <b>Date:</b> @even.Date</p>
+                    <a href="/Events/MoreInfo/@even.Id" class="btn btn-dark button">More Info...</a>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="col-3">
+        <div>
+            <h3 style="text-align:center">Top 5 Events</h3>
+            @foreach (var even in Model.TopFiveViewed)
+            {
+                <a asp-controller="Events" asp-action="MoreInfo" asp-route-id="@even.Id">
+                    <div class="recipeSidebarCard">
+                        <p>Title: @even.Name</p>
+                        <p> Viewes: @even.Views </p>
+                    </div>
+                </a>
+            }
+        </div>
+        <div>
+            <h3 style="text-align:center">Top 5 new Events</h3>
+            @foreach (var even in Model.TopNewFive)
+            {
+                <a asp-controller="Events" asp-action="MoreInfo" asp-route-id="@even.Id">
+                    <div class="recipeSidebarCard">
+                        <p>Name: @even.Name</p>
+                        <p>Date Created: @even.DateCreated </p>
+                    </div>
+                </a>
+            }
+        </div>
+
+    </div>
 </div>
+
+
+
+
