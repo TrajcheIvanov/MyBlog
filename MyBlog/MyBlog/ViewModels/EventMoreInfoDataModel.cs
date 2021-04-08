@@ -5,11 +5,10 @@ using System.Threading.Tasks;
 
 namespace MyBlog.ViewModels
 {
-    public class EventOverviewDataModel
+    public class EventMoreInfoDataModel
     {
-        public List<EventOverviewModel> OverviewEvents { get; set; }
+        public EventMoreInfoModel EventMoreInfo { get; set; }
 
         public EventSidebarDataModel SidebarData { get; set; } = new EventSidebarDataModel();
-       
     }
 }

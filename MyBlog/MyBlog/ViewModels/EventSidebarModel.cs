@@ -5,10 +5,12 @@ using System.Threading.Tasks;
 
 namespace MyBlog.ViewModels
 {
-    public class TopFiveViewedSideBarModel
+    public class EventSidebarModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public int Views { get; set; }
+
+        public DateTime DateCreated { get; set; }
     }
 }

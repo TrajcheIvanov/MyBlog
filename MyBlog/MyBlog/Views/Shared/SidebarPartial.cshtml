@@ -1,0 +1,26 @@
+﻿@model MyBlog.ViewModels.EventSidebarDataModel
+
+<div>
+    <h3 style="text-align:center">Top Events</h3>
+    @foreach (var even in Model.TopEvents)
+    {
+        <a asp-controller="Events" asp-action="MoreInfo" asp-route-id="@even.Id">
+            <div class="recipeSidebarCard">
+                <p>Title: @even.Name</p>
+                <p> Viewes: @even.Views </p>
+            </div>
+        </a>
+    }
+</div>
+<div>
+    <h3 style="text-align:center">Top new Events</h3>
+    @foreach (var even in Model.MostRecentEvents)
+    {
+        <a asp-controller="Events" asp-action="MoreInfo" asp-route-id="@even.Id">
+            <div class="recipeSidebarCard">
+                <p>Name: @even.Name</p>
+                <p>Date Created: @even.DateCreated </p>
+            </div>
+        </a>
+    }
+</div>

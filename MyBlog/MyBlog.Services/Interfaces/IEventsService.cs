@@ -18,5 +18,8 @@ namespace MyBlog.Services.Interfaces
         void Delete(int Id);
 
         void Update(Event even);
+        List<Event> GetMostRecentEvents(int count);
+
+        List<Event> GetTopEvents(int count);
     }
 }

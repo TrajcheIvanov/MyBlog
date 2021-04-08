@@ -14,9 +14,12 @@ namespace MyBlog.Controllers
     {
         private IEventsService _service { get; set; }
 
-        public EventsController(IEventsService service)
+        private ISidebarService _sidebarService { get; set; }
+
+        public EventsController(IEventsService service, ISidebarService sidebarService)
         {
             _service = service;
+            _sidebarService = sidebarService;
         }
 
         [AllowAnonymous]
@@ -26,12 +29,9 @@ namespace MyBlog.Controllers
             var overviewDataModel = new EventOverviewDataModel();
 
             var eventOverviewModels = events.Select(x => x.ToOverviewModel()).ToList();
-            var topFiveViewedMovies = events.Select(x => x.ToTopFiveViewed()).OrderByDescending(x => x.Views).Take(5).ToList();
-            var topNewFiveMovies = events.Select(x => x.ToTopNewFiveModel()).OrderByDescending(x => x.DateCreated).Take(5).ToList();
-
-            overviewDataModel.TopFiveViewed = topFiveViewedMovies;
-            overviewDataModel.TopNewFive = topNewFiveMovies;
             overviewDataModel.OverviewEvents = eventOverviewModels;
+            overviewDataModel.SidebarData = _sidebarService.GetSideBarData();
+
 
             return View(overviewDataModel);
         }
@@ -63,7 +63,12 @@ namespace MyBlog.Controllers
                     return RedirectToAction("ErrorNotFound", "Info");
                 }
 
-                return View(even.ToMoreInfoModel());
+                var eventMoreInfoDataModel = new EventMoreInfoDataModel();
+                eventMoreInfoDataModel.EventMoreInfo = even.ToMoreInfoModel();
+                eventMoreInfoDataModel.SidebarData = _sidebarService.GetSideBarData();
+
+
+                return View(eventMoreInfoDataModel);
             }
             catch (Exception)
             {

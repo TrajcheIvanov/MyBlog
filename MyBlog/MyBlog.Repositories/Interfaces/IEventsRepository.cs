@@ -9,6 +9,8 @@ namespace MyBlog.Repositories.Interfaces
     {
         
         List<Event> GetByName(string name);
- 
+        List<Event> GetMostRecentEvents(int count);
+
+        List<Event> GetTopEvents(int count);
     }
 }

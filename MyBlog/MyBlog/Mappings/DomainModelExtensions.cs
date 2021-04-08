@@ -62,27 +62,19 @@ namespace MyBlog.Mappings
             };
         }
 
-        public static TopFiveViewedSideBarModel ToTopFiveViewed(this Event even)
+        public static EventSidebarModel ToRecipeSidebarModel(this Event even)
         {
-            return new TopFiveViewedSideBarModel()
+            return new EventSidebarModel()
             {
                 Id = even.Id,
                 Name = even.Name,
                 Views = even.Views,
-            };
-
-        }
-
-        public static TopNewFiveSideBarModel ToTopNewFiveModel(this Event even)
-        {
-            return new TopNewFiveSideBarModel()
-            {
-                Id = even.Id,
-                Name = even.Name,
                 DateCreated = even.DateCreated,
             };
 
         }
+
+    
 
         public static UsersDetailsModel ToDetailsModel(this User user)
         {

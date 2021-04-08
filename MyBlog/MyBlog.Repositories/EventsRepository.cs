@@ -31,5 +31,15 @@ namespace MyBlog.Repositories
 
             return even;
         }
+
+        public List<Event> GetTopEvents(int count)
+        {
+            return _context.Events.OrderByDescending(x => x.Views).Take(5).ToList();
+        }
+
+        public List<Event> GetMostRecentEvents(int count)
+        {
+            return _context.Events.OrderByDescending(x => x.DateCreated).Take(5).ToList();
+        }
     }
 }

@@ -97,5 +97,15 @@ namespace MyBlog.Services
             }
             
         }
+
+        public List<Event> GetMostRecentEvents(int count)
+        {
+            return _eventsRepository.GetMostRecentEvents(count);
+        }
+
+        public List<Event> GetTopEvents(int count)
+        {
+            return _eventsRepository.GetTopEvents(count);
+        }
     }
 }
