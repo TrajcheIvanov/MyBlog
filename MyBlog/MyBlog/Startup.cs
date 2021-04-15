@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MyBlog.Common.Options;
+using MyBlog.Common.Services;
+using MyBlog.Custom;
 using MyBlog.Repositories;
 using MyBlog.Repositories.Interfaces;
 using MyBlog.Services;
@@ -30,7 +33,7 @@ namespace MyBlog
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<MyBlogDbContext>(
-                x => x.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=MyBlog;Trusted_Connection=True;")
+                x => x.UseSqlServer(Configuration.GetConnectionString("MyBlog"))
                 );
 
 
@@ -51,6 +54,11 @@ namespace MyBlog
                 });
             });
 
+            //configure options
+            services.Configure<SidebarConfig>(Configuration.GetSection("SidebarConfig"));
+
+
+            //register services
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddTransient<IEventsService, EventsService>();
             services.AddTransient<IRegionsService, RegionsService>();
@@ -58,7 +66,9 @@ namespace MyBlog
             services.AddTransient<IUserServices, UserServices>();
             services.AddTransient<ICommentsService, CommentsServices>();
             services.AddTransient<ISidebarService,SidebarService>();
+            services.AddTransient<ILogService, LogService>();
 
+            //register repositories
             services.AddTransient<IEventsRepository, EventsRepository>();
             services.AddTransient<IRegionsRepository, RegionsRepository>();
             services.AddTransient<IUsersRepository, UsersRepository>();
@@ -74,7 +84,7 @@ namespace MyBlog
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Info/InternalError");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
@@ -85,6 +95,10 @@ namespace MyBlog
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseMiddleware<ExceptionLoggingMiddleware>();
+
+            app.UseMiddleware<RequestResponseLogMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {

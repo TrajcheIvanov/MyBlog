@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyBlog.Common.Exceptions;
+using MyBlog.Common.Models;
+using MyBlog.Common.Services;
 using MyBlog.Mappings;
 using MyBlog.Services.Interfaces;
 using MyBlog.ViewModels;
@@ -16,15 +18,19 @@ namespace MyBlog.Controllers
 
         private ISidebarService _sidebarService { get; set; }
 
-        public EventsController(IEventsService service, ISidebarService sidebarService)
+        private ILogService _logService;
+
+        public EventsController(IEventsService service, ISidebarService sidebarService, ILogService logService)
         {
             _service = service;
             _sidebarService = sidebarService;
+            _logService = logService;
         }
 
         [AllowAnonymous]
         public IActionResult Overview(string name)
         {
+
             var events = _service.GetEventByName(name);
             var overviewDataModel = new EventOverviewDataModel();
 
@@ -92,6 +98,9 @@ namespace MyBlog.Controllers
             if(ModelState.IsValid)
             {
                 _service.CreateEvent(even.ToModel());
+                var userId = User.FindFirst("Id");
+                var logData = new LogData() { Type = LogType.Info, DateCreated = DateTime.Now, Message = $"User with id {userId} created recipe {even.Name}" };
+                _logService.Log(logData);
                 return RedirectToAction("ManageEvents", new { SuccessMessage = "Event created sucessfully" });
             }
 
