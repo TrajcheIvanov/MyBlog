@@ -11,15 +11,21 @@ namespace MyBlog.Models
 
         [Required(ErrorMessage ="Please enter Name")]
         [StringLength(maximumLength: 30, MinimumLength = 3)]
+
         public string Name { get; set; }
         [Required(ErrorMessage = "The Location is mandatory")]
+
         public string Location { get; set; }
+
         [Required]
         public string Date { get; set; }
+
         [Required]
         public string Description { get; set; }
+
         [Required]
         public string OrganizedBy { get; set; }
+
         [Required]
         public string ImgUrl {get;set;}
 
@@ -29,5 +35,12 @@ namespace MyBlog.Models
 
         public int Views { get; set; }
         public List<Comment> Comments { get; set; }
+
+        public int EventTypeId { get; set; }
+
+        public EventType EventType { get; set; }
+
+        public List<EventLike> EventLikes { get; set; }
+
     }
 }

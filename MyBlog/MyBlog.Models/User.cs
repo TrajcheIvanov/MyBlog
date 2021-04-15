@@ -22,5 +22,7 @@ namespace MyBlog.Models
         public bool IsAdministrator { get; set; }
 
         public List<Comment> Comments { get; set; }
+
+        public List<EventLike> EventLikes { get; set; }
     }
 }

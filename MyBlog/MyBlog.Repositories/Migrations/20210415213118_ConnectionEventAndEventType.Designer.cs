@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyBlog.Repositories;
 
 namespace MyBlog.Repositories.Migrations
 {
     [DbContext(typeof(MyBlogDbContext))]
-    partial class MyBlogDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210415213118_ConnectionEventAndEventType")]
+    partial class ConnectionEventAndEventType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,7 +70,7 @@ namespace MyBlog.Repositories.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("EventTypeId")
+                    b.Property<int?>("EventTypeId")
                         .HasColumnType("int");
 
                     b.Property<string>("ImgUrl")
@@ -96,28 +98,6 @@ namespace MyBlog.Repositories.Migrations
                     b.HasIndex("EventTypeId");
 
                     b.ToTable("Events");
-                });
-
-            modelBuilder.Entity("MyBlog.Models.EventLike", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("EventId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EventId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("EventLikes");
                 });
 
             modelBuilder.Entity("MyBlog.Models.EventType", b =>
@@ -212,24 +192,7 @@ namespace MyBlog.Repositories.Migrations
                 {
                     b.HasOne("MyBlog.Models.EventType", "EventType")
                         .WithMany("Events")
-                        .HasForeignKey("EventTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("MyBlog.Models.EventLike", b =>
-                {
-                    b.HasOne("MyBlog.Models.Event", "Event")
-                        .WithMany("EventLikes")
-                        .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MyBlog.Models.User", "User")
-                        .WithMany("EventLikes")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("EventTypeId");
                 });
 #pragma warning restore 612, 618
         }

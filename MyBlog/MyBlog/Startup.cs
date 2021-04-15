@@ -67,12 +67,16 @@ namespace MyBlog
             services.AddTransient<ICommentsService, CommentsServices>();
             services.AddTransient<ISidebarService,SidebarService>();
             services.AddTransient<ILogService, LogService>();
+            services.AddTransient<IEventsTypeService, EventsTypeService>();
+            services.AddTransient<IEventsLikeService, EventsLikeService>();
 
             //register repositories
             services.AddTransient<IEventsRepository, EventsRepository>();
             services.AddTransient<IRegionsRepository, RegionsRepository>();
             services.AddTransient<IUsersRepository, UsersRepository>();
             services.AddTransient<ICommentsRepository, CommentsRepository>();
+            services.AddTransient<IEventsLikeRepository, EventsLikeRepository>();
+            services.AddTransient<IEventsTypeRepository, EventsTypeRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
