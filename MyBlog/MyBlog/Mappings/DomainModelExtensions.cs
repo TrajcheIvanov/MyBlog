@@ -17,6 +17,18 @@ namespace MyBlog.Mappings
                 Name = even.Name,
                 Date = even.Date,
                 ImgUrl = even.ImgUrl,
+                EventType = even.EventType.Name,
+                EventLikes = even.EventLikes.Select(x => x.ToEventLikeModel()).ToList()
+            };
+        }
+
+        public static EventLikeModel ToEventLikeModel(this EventLike eventLike)
+        {
+            return new EventLikeModel()
+            {
+                Id =eventLike.Id,
+                EventId = eventLike.EventId,
+                UserId = eventLike.UserId
             };
         }
 
@@ -31,6 +43,14 @@ namespace MyBlog.Mappings
             };
         }
 
+        public static EventTypeModel ToEventTypeModel(this EventType evenType)
+        {
+            return new EventTypeModel()
+            {
+                Id = evenType.Id,
+                Name = evenType.Name,
+            };
+        }
 
         public static EventMoreInfoModel ToMoreInfoModel(this Event even)
         {
@@ -44,6 +64,7 @@ namespace MyBlog.Mappings
                 OrganizedBy = even.OrganizedBy,
                 ImgUrl = even.ImgUrl,
                 DateCreated = even.DateCreated,
+                EventType = even.EventType.Name,
                 Comments = even.Comments.Select(x => x.ToCommentModel()).ToList()
             };
         }
@@ -59,6 +80,7 @@ namespace MyBlog.Mappings
                 Description = even.Description,
                 OrganizedBy = even.OrganizedBy,
                 ImgUrl = even.ImgUrl,
+                EventTypeId = even.EventTypeId
             };
         }
 

@@ -46,7 +46,23 @@
             {
                 <div class="card col-3">
                     <h3 class="card-header">@even.Name</h3>
+                    <h5> Category:  @even.EventType</h5>
                     <img src="@even.ImgUrl" alt="...">
+                      @if (User.Identity.IsAuthenticated)
+                            {
+                                if (even.EventLikes.Any(x => x.UserId == int.Parse(User.FindFirst("Id").Value)))
+                                {
+                                    <a asp-controller="EventLike" asp-action="Remove" asp-route-eventId="@even.Id">
+                                        <i class="fas fa-thumbs-up"></i>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a asp-controller="EventLike" asp-action="Add" asp-route-eventId="@even.Id">
+                                        <i class="far fa-thumbs-up"></i>
+                                    </a>
+                                }
+                            }
                     <p class="card-text"> <b>Date:</b> @even.Date</p>
                     <a href="/Events/MoreInfo/@even.Id" class="btn btn-dark button">More Info...</a>
                 </div>

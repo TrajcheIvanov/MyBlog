@@ -1,6 +1,6 @@
 ﻿@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
 
-@model MyBlog.Models.Event
+@model MyBlog.ViewModels.EventUpdateModel
 
 @{
     ViewBag.Title = "Edit Event";
@@ -9,7 +9,7 @@
 <form asp-controller="Events" asp-action="Update" asp-route-id="@Model.Id" method="post">
     <div class="form-group">
         <label class="control-label" asp-for="Name">Name</label>
-        <input type="text" asp-for="Name" class="form-control"  />
+        <input type="text" asp-for="Name" class="form-control" />
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>
     <div class="form-group">
@@ -31,6 +31,14 @@
         <label class="control-label" asp-for="OrganizedBy">Organized By</label>
         <input type="text" asp-for="OrganizedBy" class="form-control" />
         <span asp-validation-for="OrganizedBy" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label class="control-label" asp-for="EventTypeId">Event type</label>
+        <select asp-for="EventTypeId" class="form-control">
+            @foreach (var eventType in Model.EventTypes)
+            {
+<option value="@eventType.Id">@eventType.Name</option>            }
+        </select>
     </div>
     <div class="form-group">
         <label class="control-label" asp-for="Description">Description </label>

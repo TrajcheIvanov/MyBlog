@@ -9,7 +9,7 @@ namespace MyBlog.Services.Interfaces
     {
         List<Event> GetAllEvents();
 
-        List<Event> GetEventByName(string name);
+        List<Event> GetEventsWithFilters(string name);
         Event GetEventById(int id);
 
         Event GetEventDetails(int Id);

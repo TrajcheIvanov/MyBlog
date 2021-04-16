@@ -20,18 +20,26 @@ namespace MyBlog.Controllers
 
         private ILogService _logService;
 
-        public EventsController(IEventsService service, ISidebarService sidebarService, ILogService logService)
+        private IEventsTypeService _eventsTypeService;
+
+        public EventsController(
+            IEventsService service, 
+            ISidebarService sidebarService, 
+            ILogService logService,
+            IEventsTypeService eventsTypeService
+            )
         {
             _service = service;
             _sidebarService = sidebarService;
             _logService = logService;
+            _eventsTypeService = eventsTypeService;
         }
 
         [AllowAnonymous]
         public IActionResult Overview(string name)
         {
 
-            var events = _service.GetEventByName(name);
+            var events = _service.GetEventsWithFilters(name);
             var overviewDataModel = new EventOverviewDataModel();
 
             var eventOverviewModels = events.Select(x => x.ToOverviewModel()).ToList();
@@ -89,7 +97,13 @@ namespace MyBlog.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            var eventTypes = _eventsTypeService.GetAll();
+            var viewModels = eventTypes.Select(x => x.ToEventTypeModel()).ToList();
+
+            var viewModel = new EventCreateModel();
+            viewModel.EventTypes = viewModels;
+
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -134,7 +148,13 @@ namespace MyBlog.Controllers
 
                 if (even != null)
                 {
-                    return View(even);
+                    var viewModel = even.ToUpdateModel();
+
+                    var eventTypes = _eventsTypeService.GetAll();
+                    var viewModels = eventTypes.Select(x => x.ToEventTypeModel()).ToList();
+
+                    viewModel.EventTypes = viewModels;
+                    return View(viewModel);
                 }
                 else
                 {

@@ -16,6 +16,7 @@ namespace MyBlog.Mappings
                 Date = viewModel.Date,
                 OrganizedBy = viewModel.OrganizedBy,
                 Description = viewModel.Description,
+                EventTypeId = viewModel.EventTypeId,
             };
         }
 
@@ -30,6 +31,7 @@ namespace MyBlog.Mappings
                 Date = viewModel.Date,
                 OrganizedBy = viewModel.OrganizedBy,
                 Description = viewModel.Description,
+                EventTypeId = viewModel.EventTypeId,
             };
         }
         public static User ToModel(this UserUpdateModel updateModel)

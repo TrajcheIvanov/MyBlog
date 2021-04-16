@@ -33,7 +33,7 @@ namespace MyBlog.Services
         {
             var like = _eventsLikeRepository.Get(eventId, userId);
 
-            if (like == null)
+            if (like != null)
             {
 
                 _eventsLikeRepository.Delete(like);

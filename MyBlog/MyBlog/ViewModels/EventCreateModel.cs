@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace MyBlog.ViewModels
 {
@@ -17,6 +18,10 @@ namespace MyBlog.ViewModels
         public string OrganizedBy { get; set; }
         [Required]
         public string ImgUrl { get; set; }
+
+        public int EventTypeId { get; set; }
+
+        public List<EventTypeModel> EventTypes { get; set; }
 
     }
 }

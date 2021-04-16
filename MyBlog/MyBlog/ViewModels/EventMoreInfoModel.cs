@@ -19,6 +19,7 @@ namespace MyBlog.ViewModels
         
         public string ImgUrl { get; set; }
 
+        public string EventType { get; set; }
         public DateTime DateCreated { get; set; }
 
         public List<EventCommentModel> Comments { get; set; }

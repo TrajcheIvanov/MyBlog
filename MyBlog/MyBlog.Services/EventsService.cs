@@ -47,17 +47,12 @@ namespace MyBlog.Services
             _eventsRepository.Add(even);
         }
 
-        public List<Event> GetEventByName(string name)
+        public List<Event> GetEventsWithFilters(string name)
         {
 
-            if (name == null)
-            {
-                return _eventsRepository.GetAll();
-            } else
-            {
-                return _eventsRepository.GetByName(name);
-            }
-           
+            return _eventsRepository.GetEventsWithFilters(name);
+
+
         }
 
         public void Delete(int Id)
@@ -88,6 +83,8 @@ namespace MyBlog.Services
                 EventForUpdate.Name = even.Name;
                 EventForUpdate.OrganizedBy = even.OrganizedBy;
                 EventForUpdate.DateModified = DateTime.Now;
+                EventForUpdate.EventTypeId = even.EventTypeId;
+
 
                 _eventsRepository.Update(EventForUpdate);
             }

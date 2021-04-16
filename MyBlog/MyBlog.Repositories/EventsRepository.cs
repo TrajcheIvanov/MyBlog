@@ -16,15 +16,11 @@ namespace MyBlog.Repositories
         }
 
     
-        public List<Event> GetByName(string name)
-        {
-            var events = _context.Events.Where(x => x.Name.Contains(name)).ToList();
-            return events;
-        }
 
         public override Event GetById(int entityId)
         {
             var even = _context.Events
+                .Include(x => x.EventType)
                 .Include(x => x.Comments)
                     .ThenInclude(x => x.User)
                 .FirstOrDefault(x => x.Id == entityId);
@@ -40,6 +36,20 @@ namespace MyBlog.Repositories
         public List<Event> GetMostRecentEvents(int count)
         {
             return _context.Events.OrderByDescending(x => x.DateCreated).Take(5).ToList();
+        }
+
+        public List<Event> GetEventsWithFilters(string name)
+        { 
+            var query = _context.Events.Include(x => x.EventType).Include(x => x.EventLikes);
+
+            if (name != null)
+            {
+                query.Where(x => x.Name.Contains(name));
+            }
+
+            var events = query.ToList();
+
+            return events;
         }
     }
 }
